@@ -161,7 +161,7 @@ export function CompanyMarketplace() {
               content={item}
               onUpdate={loadContent}
               showPurchase={true}
-              onPurchaseClick={() => handlePurchase(item)}
+              onPurchase={() => handlePurchase(item)}
             />
           ))}
         </div>
