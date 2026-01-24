@@ -14,21 +14,26 @@ const stripe = new Stripe(stripeSecret, {
 const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
 Deno.serve(async (req) => {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature',
+  };
+
   try {
     // Handle OPTIONS request for CORS preflight
     if (req.method === 'OPTIONS') {
-      return new Response(null, { status: 204 });
+      return new Response(null, { status: 204, headers: corsHeaders });
     }
 
     if (req.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405 });
+      return new Response('Method not allowed', { status: 405, headers: corsHeaders });
     }
 
     // get the signature from the header
     const signature = req.headers.get('stripe-signature');
 
     if (!signature) {
-      return new Response('No signature found', { status: 400 });
+      return new Response('No signature found', { status: 400, headers: corsHeaders });
     }
 
     // get the raw body
@@ -41,15 +46,15 @@ Deno.serve(async (req) => {
       event = await stripe.webhooks.constructEventAsync(body, signature, stripeWebhookSecret);
     } catch (error: any) {
       console.error(`Webhook signature verification failed: ${error.message}`);
-      return new Response(`Webhook signature verification failed: ${error.message}`, { status: 400 });
+      return new Response(`Webhook signature verification failed: ${error.message}`, { status: 400, headers: corsHeaders });
     }
 
     EdgeRuntime.waitUntil(handleEvent(event));
 
-    return Response.json({ received: true });
+    return Response.json({ received: true }, { headers: corsHeaders });
   } catch (error: any) {
     console.error('Error processing webhook:', error);
-    return Response.json({ error: error.message }, { status: 500 });
+    return Response.json({ error: error.message }, { status: 500, headers: corsHeaders });
   }
 });
 
@@ -140,9 +145,26 @@ async function handleEvent(event: Stripe.Event) {
           return;
         }
 
-        // Calculate Zaryo amount: $1 = 100 Zaryo
-        // amount_total is in cents, so divide by 100 first to get dollars, then multiply by 100
-        const zaryoAmount = Math.floor((amount_total || 0) / 100 * 100);
+        // Calculate Zaryo amount based on price
+        // Map: $1 = 100 Zaryo, $5 = 500 Zaryo, $10 = 1000 Zaryo, $50 = 5000 Zaryo
+        const amountInDollars = (amount_total || 0) / 100; // Convert cents to dollars
+        let zaryoAmount = 0;
+
+        // Determine Zaryo amount based on purchase amount
+        if (amountInDollars === 1) {
+          zaryoAmount = 100;
+        } else if (amountInDollars === 5) {
+          zaryoAmount = 500;
+        } else if (amountInDollars === 10) {
+          zaryoAmount = 1000;
+        } else if (amountInDollars === 50) {
+          zaryoAmount = 5000;
+        } else {
+          // Fallback: 1 dollar = 100 Zaryo
+          zaryoAmount = Math.floor(amountInDollars * 100);
+        }
+
+        console.info(`Processing token purchase: $${amountInDollars} = ${zaryoAmount} Zaryo`);
 
         if (zaryoAmount > 0) {
           // Get the user's wallet

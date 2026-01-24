@@ -16,11 +16,13 @@ import {
   X,
   Settings,
   UserRound,
+  HelpCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { AccountSettingsDialog } from '@/components/layout/AccountSettingsDialog';
+import { HelpDialog } from '@/components/layout/HelpDialog';
 
 const getNavigation = (role?: string) => {
   const baseNavigation = [
@@ -40,6 +42,7 @@ export function Sidebar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
@@ -127,15 +130,26 @@ export function Sidebar() {
                   </p>
                 </div>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-10 w-10"
-                onClick={() => setSettingsOpen(true)}
-              >
-                <Settings className="h-4 w-4" />
-                <span className="sr-only">Open account settings</span>
-              </Button>
+              <div className="flex gap-1">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10"
+                  onClick={() => setHelpOpen(true)}
+                >
+                  <HelpCircle className="h-4 w-4" />
+                  <span className="sr-only">Open help</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10"
+                  onClick={() => setSettingsOpen(true)}
+                >
+                  <Settings className="h-4 w-4" />
+                  <span className="sr-only">Open account settings</span>
+                </Button>
+              </div>
             </div>
             <Button
               variant="outline"
@@ -157,6 +171,7 @@ export function Sidebar() {
       )}
 
       <AccountSettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <HelpDialog open={helpOpen} onOpenChange={setHelpOpen} />
     </>
   );
 }

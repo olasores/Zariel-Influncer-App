@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileVideo, Coins, TrendingUp, DollarSign, ShoppingBag, Building2, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Users, FileVideo, Coins, TrendingUp, DollarSign, ShoppingBag, Building2, Sparkles, ArrowRight, Shield } from 'lucide-react';
+import Link from 'next/link';
+import { AdminUserManager } from '@/components/admin/AdminUserManager';
+import { AdminRedemptionManager } from '@/components/admin/AdminRedemptionManager';
 
 interface AdminStats {
   totalUsers: number;
@@ -21,6 +25,7 @@ interface AdminStats {
 
 export function AdminOverview() {
   const { profile } = useAuth();
+  const [activeView, setActiveView] = useState<'overview' | 'users' | 'redemptions'>('overview');
   const [stats, setStats] = useState<AdminStats>({
     totalUsers: 0,
     totalCreators: 0,
@@ -170,7 +175,7 @@ export function AdminOverview() {
     },
   ];
 
-  return (
+  const overviewContent = (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
@@ -206,12 +211,72 @@ export function AdminOverview() {
           <CardTitle>Admin Quick Actions</CardTitle>
           <CardDescription>Manage platform content, users, and settings</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
-          <p className="text-sm text-gray-600">
-            Use the tabs above to manage content pricing, view all users, and monitor platform activity.
-          </p>
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <button
+            onClick={() => setActiveView('users')}
+            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-blue-50">
+                <Users className="h-5 w-5 text-blue-600" />
+              </div>
+              <div>
+                <div className="font-semibold">User Management</div>
+                <div className="text-sm text-gray-600">View and manage all users</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-gray-400" />
+          </button>
+
+          <button
+            onClick={() => setActiveView('redemptions')}
+            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-yellow-50">
+                <Coins className="h-5 w-5 text-yellow-600" />
+              </div>
+              <div>
+                <div className="font-semibold">Redemption Requests</div>
+                <div className="text-sm text-gray-600">Process token redemptions</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-gray-400" />
+          </button>
         </CardContent>
       </Card>
     </div>
   );
+
+  if (activeView === 'users') {
+    return (
+      <div>
+        <Button
+          variant="ghost"
+          onClick={() => setActiveView('overview')}
+          className="mb-4"
+        >
+          ← Back to Overview
+        </Button>
+        <AdminUserManager />
+      </div>
+    );
+  }
+
+  if (activeView === 'redemptions') {
+    return (
+      <div>
+        <Button
+          variant="ghost"
+          onClick={() => setActiveView('overview')}
+          className="mb-4"
+        >
+          ← Back to Overview
+        </Button>
+        <AdminRedemptionManager />
+      </div>
+    );
+  }
+
+  return overviewContent;
 }
