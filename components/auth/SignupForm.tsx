@@ -157,7 +157,7 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
                 <Label htmlFor="creator" className="flex-1 cursor-pointer">
                   <div className="font-semibold">Creator</div>
                   <div className="text-sm text-muted-foreground">
-                    Upload content ideas and earn tokens
+                    For Tier 1 users
                   </div>
                 </Label>
               </div>
@@ -166,7 +166,7 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
                 <Label htmlFor="company" className="flex-1 cursor-pointer">
                   <div className="font-semibold">Company</div>
                   <div className="text-sm text-muted-foreground">
-                    Browse and purchase content concepts
+                    For Tier 2 and Tier 3 users
                   </div>
                 </Label>
               </div>
