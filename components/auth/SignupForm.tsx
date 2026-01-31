@@ -157,16 +157,25 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
                 <Label htmlFor="creator" className="flex-1 cursor-pointer">
                   <div className="font-semibold">Creator</div>
                   <div className="text-sm text-muted-foreground">
-                    For Tier 1 users
+                    Tier 1 - Upload and sell content
                   </div>
                 </Label>
               </div>
               <div className="flex items-center space-x-2 rounded-lg border p-4">
-                <RadioGroupItem value="company" id="company" />
-                <Label htmlFor="company" className="flex-1 cursor-pointer">
-                  <div className="font-semibold">Company</div>
+                <RadioGroupItem value="innovator" id="innovator" />
+                <Label htmlFor="innovator" className="flex-1 cursor-pointer">
+                  <div className="font-semibold">Innovator</div>
                   <div className="text-sm text-muted-foreground">
-                    For Tier 2 and Tier 3 users
+                    Tier 2 - Browse and purchase content
+                  </div>
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2 rounded-lg border p-4">
+                <RadioGroupItem value="visionary" id="visionary" />
+                <Label htmlFor="visionary" className="flex-1 cursor-pointer">
+                  <div className="font-semibold">Visionary</div>
+                  <div className="text-sm text-muted-foreground">
+                    Tier 3 - Advanced features and priority access
                   </div>
                 </Label>
               </div>

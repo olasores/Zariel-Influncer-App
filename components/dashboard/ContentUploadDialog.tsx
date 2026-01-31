@@ -137,10 +137,11 @@ export function ContentUploadDialog({ open, onOpenChange, onSuccess, subscriptio
 
   const config = CONTENT_TYPE_CONFIG[contentType];
   const isAdminUser = profile ? isAdmin(profile) : false;
+  const isTier1Creator = profile?.role === 'creator';
   const subscriptionAllowsUploads =
     !!subscription && new Date(subscription.current_period_end).getTime() > Date.now();
-  // Admins can always upload, others need an active subscription
-  const uploadLocked = !isAdminUser && !subscriptionAllowsUploads;
+  // Tier 1 creators and admins can upload for free, tier 2/3 need subscription
+  const uploadLocked = !isAdminUser && !isTier1Creator && !subscriptionAllowsUploads;
 
   // Debug logging
   if (open) {

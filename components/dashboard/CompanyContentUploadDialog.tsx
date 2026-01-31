@@ -139,7 +139,7 @@ export function CompanyContentUploadDialog({ open, onOpenChange, onSuccess, subs
   const isAdminUser = profile ? isAdmin(profile) : false;
   const subscriptionAllowsUploads =
     !!subscription && new Date(subscription.current_period_end).getTime() > Date.now();
-  // Admins can always upload, others need an active subscription
+  // Admins can upload for free, tier 2/3 users need subscription
   const uploadLocked = !isAdminUser && !subscriptionAllowsUploads;
 
   return (
