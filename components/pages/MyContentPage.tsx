@@ -28,7 +28,7 @@ export function MyContentPage() {
   }
 
   // Route companies to CompanyMyContent
-  if (profile?.role === 'company') {
+  if (profile?.role === 'innovator' || profile?.role === 'visionary') {
     return <CompanyMyContent />;
   }
 

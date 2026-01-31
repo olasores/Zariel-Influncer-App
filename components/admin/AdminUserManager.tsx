@@ -211,7 +211,7 @@ export function AdminUserManager() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {users.filter(u => u.role === 'company').length}
+              {users.filter(u => u.role === 'innovator' || u.role === 'visionary').length}
             </div>
           </CardContent>
         </Card>

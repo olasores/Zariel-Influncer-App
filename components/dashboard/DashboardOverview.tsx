@@ -20,7 +20,7 @@ export function DashboardOverview() {
   }
 
   // Route companies to CompanyOverview
-  if (profile?.role === 'company') {
+  if (profile?.role === 'innovator' || profile?.role === 'visionary') {
     return <CompanyOverview />;
   }
 

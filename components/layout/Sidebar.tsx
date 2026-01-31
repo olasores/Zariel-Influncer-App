@@ -37,7 +37,7 @@ const getNavigation = (role?: string) => {
   ];
 
   // Add Content Bids for creators and companies (both can receive bids)
-  if (role === 'creator' || role === 'company') {
+  if (role === 'creator' || role === 'innovator' || role === 'visionary') {
     baseNavigation.push({ name: 'Content Bids', href: '/content-bids', icon: Gavel });
   }
 

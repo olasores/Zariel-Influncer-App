@@ -20,7 +20,7 @@ export function SubscriptionPageContent() {
   }
 
   // Route companies to CompanySubscription
-  if (profile?.role === 'company') {
+  if (profile?.role === 'innovator' || profile?.role === 'visionary') {
     return <CompanySubscription />;
   }
 

@@ -35,7 +35,7 @@ export function MarketplacePage() {
   }
 
   // Route companies to CompanyMarketplace
-  if (profile?.role === 'company') {
+  if (profile?.role === 'innovator' || profile?.role === 'visionary') {
     return <CompanyMarketplace />;
   }
 
@@ -182,7 +182,7 @@ export function MarketplacePage() {
               content={item}
               onUpdate={loadContent}
               onPurchase={() => handlePurchase(item)}
-              showPurchase={profile?.role === 'company'}
+              showPurchase={profile?.role === 'innovator' || profile?.role === 'visionary'}
             />
           ))}
         </div>

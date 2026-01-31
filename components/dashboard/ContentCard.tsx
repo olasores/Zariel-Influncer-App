@@ -38,9 +38,9 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
   const { profile } = useAuth();
   const [creatorProfile, setCreatorProfile] = useState<Profile | null>(null);
 
-  // Check if user can bid (All companies and Admins)
+  // Check if user can bid (All innovators, visionaries and Admins)
   const canBid = showBidding && profile && (
-    isAdmin(profile) || profile.role === 'company'
+    isAdmin(profile) || profile.role === 'innovator' || profile.role === 'visionary'
   );
 
   useEffect(() => {
@@ -191,7 +191,7 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
           <h3 className="font-semibold text-lg line-clamp-1 flex-1">{content.title}</h3>
           {creatorProfile && (
             <Badge variant="outline" className="flex items-center gap-1">
-              {creatorProfile.role === 'company' ? (
+              {creatorProfile.role === 'innovator' || creatorProfile.role === 'visionary' ? (
                 <>
                   <Building2 className="h-3 w-3" />
                   Company
