@@ -118,6 +118,19 @@ export function AccountSettingsDialog({ open, onOpenChange }: AccountSettingsDia
           <section>
             <h3 className="text-sm font-semibold text-muted-foreground">Profile</h3>
             <div className="mt-4 space-y-3">
+              <div>
+                <Label className="text-xs text-muted-foreground">Account Tier</Label>
+                <p className="text-sm font-medium mt-1">
+                  {profile.role === 'creator' ? 'Tier 1 - Creator' :
+                   profile.role === 'innovator' ? 'Tier 2 - Innovator' :
+                   profile.role === 'visionary' ? 'Tier 3 - Visionary' :
+                   profile.role === 'admin' ? 'Admin' : 'User'}
+                </p>
+              </div>
+              <div>
+                <Label htmlFor="email" className="text-xs text-muted-foreground">Email</Label>
+                <p className="text-sm font-medium mt-1">{profile.email}</p>
+              </div>
               <Label htmlFor="displayName">Display name</Label>
               <Input
                 id="displayName"

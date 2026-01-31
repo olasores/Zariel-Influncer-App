@@ -4,7 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { isAdmin } from '@/lib/admin-auth';
 import { AdminOverview } from '@/components/admin/AdminOverview';
 import { CreatorOverview } from '@/components/creator/CreatorOverview';
-import { CompanyOverview } from '@/components/company/CompanyOverview';
+import { InnovatorOverview } from '@/components/innovator/InnovatorOverview';
+import { VisionaryOverview } from '@/components/visionary/VisionaryOverview';
 
 export function DashboardOverview() {
   const { profile } = useAuth();
@@ -14,14 +15,19 @@ export function DashboardOverview() {
     return <AdminOverview />;
   }
 
-  // Route creators to CreatorOverview
+  // Route creators to CreatorOverview (Tier 1)
   if (profile?.role === 'creator') {
     return <CreatorOverview />;
   }
 
-  // Route companies to CompanyOverview
-  if (profile?.role === 'innovator' || profile?.role === 'visionary') {
-    return <CompanyOverview />;
+  // Route innovators to InnovatorOverview (Tier 2)
+  if (profile?.role === 'innovator') {
+    return <InnovatorOverview />;
+  }
+
+  // Route visionaries to VisionaryOverview (Tier 3)
+  if (profile?.role === 'visionary') {
+    return <VisionaryOverview />;
   }
 
   // Fallback for no profile or unknown role

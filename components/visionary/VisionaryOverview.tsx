@@ -6,16 +6,16 @@ import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Coins, ShoppingBag, TrendingUp, TrendingDown } from 'lucide-react';
 
-interface CompanyStats {
+interface VisionaryStats {
   tokenBalance: number;
   totalPurchases: number;
   totalEarned: number;
   totalSpent: number;
 }
 
-export function CompanyOverview() {
+export function VisionaryOverview() {
   const { profile } = useAuth();
-  const [stats, setStats] = useState<CompanyStats>({
+  const [stats, setStats] = useState<VisionaryStats>({
     tokenBalance: 0,
     totalPurchases: 0,
     totalEarned: 0,
@@ -112,9 +112,9 @@ export function CompanyOverview() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900">Company Dashboard</h2>
+        <h2 className="text-3xl font-bold text-gray-900">Visionary Dashboard</h2>
         <p className="text-gray-600 mt-1">
-          Welcome back, {profile?.full_name || profile?.email}
+          Welcome back, {profile?.full_name || profile?.email} · <span className="font-semibold text-green-600">Tier 3 - Visionary</span>
         </p>
       </div>
 

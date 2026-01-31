@@ -114,7 +114,7 @@ export function InnovatorOverview() {
       <div>
         <h2 className="text-3xl font-bold text-gray-900">Innovator Dashboard</h2>
         <p className="text-gray-600 mt-1">
-          Welcome back, {profile?.full_name || profile?.email} - Tier 2
+          Welcome back, {profile?.full_name || profile?.email} · <span className="font-semibold text-purple-600">Tier 2 - Innovator</span>
         </p>
       </div>
 

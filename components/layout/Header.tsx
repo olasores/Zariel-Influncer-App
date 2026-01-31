@@ -56,7 +56,10 @@ export function Header() {
             ZARIEL & Co
           </h1>
           <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
-            {profile.role === 'creator' ? 'Creator' : 'Company'}
+            {profile.role === 'creator' ? 'Tier 1 - Creator' : 
+             profile.role === 'innovator' ? 'Tier 2 - Innovator' : 
+             profile.role === 'visionary' ? 'Tier 3 - Visionary' : 
+             profile.role === 'admin' ? 'Admin' : 'User'}
           </span>
         </div>
 

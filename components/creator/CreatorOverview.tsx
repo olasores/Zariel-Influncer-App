@@ -154,7 +154,7 @@ export function CreatorOverview() {
       <div>
         <h2 className="text-3xl font-bold text-gray-900">Creator Dashboard</h2>
         <p className="text-gray-600 mt-1">
-          Welcome back, {profile?.full_name || profile?.email}
+          Welcome back, {profile?.full_name || profile?.email} · <span className="font-semibold text-blue-600">Tier 1 - Creator</span>
         </p>
       </div>
 

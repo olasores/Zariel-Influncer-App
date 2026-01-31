@@ -151,7 +151,12 @@ export function Sidebar() {
                     {profile?.full_name || profile?.email || 'Your account'}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {profile ? `${profile.role === 'creator' ? 'Creator' : 'Company'} account` : 'Not signed in'}
+                    {profile ? (
+                      profile.role === 'creator' ? 'Tier 1 - Creator' :
+                      profile.role === 'innovator' ? 'Tier 2 - Innovator' :
+                      profile.role === 'visionary' ? 'Tier 3 - Visionary' :
+                      profile.role === 'admin' ? 'Admin' : 'User'
+                    ) : 'Not signed in'}
                   </p>
                 </div>
               </div>
