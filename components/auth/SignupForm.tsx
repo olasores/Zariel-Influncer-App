@@ -36,13 +36,6 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: {
-            full_name: fullName,
-            role: role,
-            is_admin: isAdminUser,
-          },
-        },
       });
 
       if (authError) throw authError;
@@ -55,6 +48,68 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
       }
 
       if (authData.user) {
+        // Get tier based on role
+        let tier = 1; // default creator
+        if (role === 'innovator') tier = 2;
+        else if (role === 'visionary') tier = 3;
+
+        console.log('Creating profile with:', { 
+          fullName, 
+          role, 
+          tier, 
+          isAdminUser,
+          userId: authData.user.id 
+        });
+
+
+        // Upsert profile (insert if missing, update if exists)
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .upsert({
+            id: authData.user.id,
+            email: authData.user.email!,
+            full_name: fullName,
+            role: role,
+            is_admin: isAdminUser,
+            tier: tier
+          }, { onConflict: 'id' });
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          throw profileError;
+        }
+
+        // Wait for profile to exist before creating wallet (race condition fix)
+        let profileExists = false;
+        for (let i = 0; i < 5; i++) {
+          const { data: checkProfile } = await supabase
+            .from('profiles')
+            .select('id')
+            .eq('id', authData.user.id)
+            .maybeSingle();
+          if (checkProfile?.id) {
+            profileExists = true;
+            break;
+          }
+          await new Promise(res => setTimeout(res, 200));
+        }
+        if (!profileExists) {
+          throw new Error('Profile row not found after upsert');
+        }
+
+        // Create token wallet (only insert, don't upsert)
+        const { error: walletError } = await supabase
+          .from('token_wallets')
+          .insert({
+            user_id: authData.user.id,
+            balance: 0
+          });
+
+        if (walletError) {
+          console.error('Wallet creation error:', walletError);
+          throw walletError;
+        }
+
         // Check if user needs email confirmation
         if (authData.session === null) {
           setError('Account created! Please check your email to confirm your account before logging in.');
@@ -62,8 +117,11 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
           return;
         }
 
-        // Profile will be created automatically by the database trigger
-        // which reads from raw_user_meta_data
+        // Force profile refresh if available
+        if (typeof window !== 'undefined') {
+          const event = new Event('zariel-profile-refresh');
+          window.dispatchEvent(event);
+        }
         onSuccess?.();
       }
     } catch (err: any) {
