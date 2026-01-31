@@ -30,11 +30,19 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
     setError('');
 
     try {
+      // Check if email is admin domain
+      const isAdminUser = isAdminEmail(email);
+
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            full_name: fullName,
+            role: role,
+            is_admin: isAdminUser,
+          },
         },
       });
 
@@ -55,28 +63,8 @@ export function SignupForm({ onSuccess, onSwitchToLogin }: SignupFormProps) {
           return;
         }
 
-        // Check if email is admin domain
-        const isAdmin = isAdminEmail(email);
-
-        const { error: profileError } = await supabase.from('profiles').insert({
-          id: authData.user.id,
-          email,
-          full_name: fullName,
-          role,
-          is_admin: isAdmin,
-        });
-
-        if (profileError) throw profileError;
-
-        const { error: walletError } = await supabase.from('token_wallets').insert({
-          user_id: authData.user.id,
-          balance: 0,
-          total_earned: 0,
-          total_spent: 0,
-        });
-
-        if (walletError) throw walletError;
-
+        // Profile will be created automatically by the database trigger
+        // which reads from raw_user_meta_data
         onSuccess?.();
       }
     } catch (err: any) {

@@ -105,8 +105,11 @@ export function Sidebar() {
                   <p className="text-sm font-medium text-gray-900 truncate">
                     {profile.full_name || profile.email}
                   </p>
-                  <p className="text-xs text-gray-600 mt-1 capitalize">
-                    {profile.role}
+                  <p className="text-xs text-gray-600 mt-1">
+                    {profile.role === 'creator' ? 'Creator' :
+                     profile.role === 'innovator' ? 'Innovator' :
+                     profile.role === 'visionary' ? 'Visionary' :
+                     profile.role === 'admin' ? 'Admin' : profile.role}
                   </p>
                 </div>
               </div>
