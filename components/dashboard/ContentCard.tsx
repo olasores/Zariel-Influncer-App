@@ -5,13 +5,14 @@ import { Content, Profile } from '@/lib/supabase';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Coins, Trash2, Eye, FileText, Music, Image as ImageIcon, Film, Building2, User, Gavel } from 'lucide-react';
+import { Coins, Trash2, Eye, FileText, Music, Image as ImageIcon, Film, Building2, User, Gavel, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { isAdmin } from '@/lib/admin-auth';
 import { BidDialog } from './BidDialog';
+import { ContentEditDialog } from './ContentEditDialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,11 +38,15 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
   const { toast } = useToast();
   const { profile } = useAuth();
   const [creatorProfile, setCreatorProfile] = useState<Profile | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   // Check if user can bid (All innovators, visionaries and Admins)
   const canBid = showBidding && profile && (
     isAdmin(profile) || profile.role === 'innovator' || profile.role === 'visionary'
   );
+
+  // Check if user can edit this content
+  const canEdit = profile && (content.creator_id === profile.id || isAdmin(profile));
 
   useEffect(() => {
     fetchCreatorProfile();
@@ -268,6 +273,15 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
                 View
               </a>
             </Button>
+            {canEdit && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => setEditDialogOpen(true)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+            )}
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" size="sm">
@@ -290,6 +304,13 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
           </>
         )}
       </CardFooter>
+
+      <ContentEditDialog
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        content={content}
+        onSuccess={onUpdate}
+      />
     </Card>
   );
 }
