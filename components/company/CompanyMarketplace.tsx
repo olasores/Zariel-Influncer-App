@@ -77,6 +77,7 @@ export function CompanyMarketplace() {
         .eq('status', 'active')
         .order('created_at', { ascending: false });
 
+      console.log('CompanyMarketplace: loaded content:', data);
       if (error) throw error;
       setContent(data || []);
       setFilteredContent(data || []);

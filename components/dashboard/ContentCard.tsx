@@ -239,15 +239,6 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
       <CardFooter className="p-4 pt-0 gap-2">
         {canBid ? (
           <div className="flex gap-2 w-full">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onClick={() => onPurchase?.(content)}
-              disabled={content.status !== 'active'}
-            >
-              <Coins className="mr-2 h-4 w-4" />
-              Buy Now
-            </Button>
             {content.status === 'active' ? (
               <BidDialog
                 contentId={content.id}
@@ -269,15 +260,6 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
               </Button>
             )}
           </div>
-        ) : showPurchase ? (
-          <Button
-            className="w-full"
-            onClick={() => onPurchase?.(content)}
-            disabled={content.status !== 'active'}
-          >
-            <Coins className="mr-2 h-4 w-4" />
-            Purchase Concept
-          </Button>
         ) : (
           <>
             <Button variant="outline" className="flex-1" size="sm" asChild>
