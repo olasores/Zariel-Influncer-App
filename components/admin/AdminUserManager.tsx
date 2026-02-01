@@ -164,7 +164,9 @@ export function AdminUserManager() {
   const getRoleBadge = (role: string, isAdmin: boolean) => {
     if (isAdmin) return <Badge className="bg-blue-600">Admin</Badge>;
     if (role === 'creator') return <Badge variant="secondary">Creator</Badge>;
-    return <Badge variant="outline">Company</Badge>;
+    if (role === 'innovator') return <Badge variant="outline">Innovator</Badge>;
+    if (role === 'visionary') return <Badge variant="outline">Visionary</Badge>;
+    return <Badge variant="outline">User</Badge>;
   };
 
   if (loading) {

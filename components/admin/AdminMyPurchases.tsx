@@ -12,7 +12,7 @@ import { Search, ShoppingBag } from 'lucide-react';
 interface Purchase {
   id: string;
   created_at: string;
-  tokens_spent: number;
+  tokens_paid: number;
   content: {
     id: string;
     title: string;
@@ -59,8 +59,8 @@ export function AdminMyPurchases() {
         .select(`
           id,
           created_at,
-          tokens_spent,
-          content:videos!purchases_content_id_fkey (
+          tokens_paid,
+          content:videos!video_id (
             id,
             title,
             content_type,
@@ -160,7 +160,7 @@ export function AdminMyPurchases() {
                       <TableCell>
                         <Badge variant="outline">{purchase.content.content_type || 'video'}</Badge>
                       </TableCell>
-                      <TableCell>{purchase.tokens_spent} Zaryo</TableCell>
+                      <TableCell>{purchase.tokens_paid} Zaryo</TableCell>
                       <TableCell className="text-sm text-gray-500">
                         {new Date(purchase.created_at).toLocaleDateString()}
                       </TableCell>
