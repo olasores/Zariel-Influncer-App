@@ -19,6 +19,7 @@ import {
   HelpCircle,
   Gavel,
   Briefcase,
+  Package,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -30,6 +31,7 @@ const getNavigation = (role?: string) => {
   const baseNavigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Marketplace', href: '/marketplace', icon: Store },
+    { name: 'Products', href: '/products', icon: Package },
     { name: 'Services', href: '/services', icon: Briefcase },
     { name: 'Booking Requests', href: '/my-services', icon: Briefcase },
     { name: 'My Bookings', href: '/my-bookings', icon: ShoppingBag },

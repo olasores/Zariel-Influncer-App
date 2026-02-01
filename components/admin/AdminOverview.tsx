@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Users, FileVideo, Coins, TrendingUp, DollarSign, ShoppingBag, Building2, Sparkles, ArrowRight, Shield } from 'lucide-react';
+import { Users, FileVideo, Coins, TrendingUp, DollarSign, ShoppingBag, Building2, Sparkles, ArrowRight, Shield, Package } from 'lucide-react';
 import Link from 'next/link';
 import { AdminUserManager } from '@/components/admin/AdminUserManager';
 import { AdminRedemptionManager } from '@/components/admin/AdminRedemptionManager';
@@ -211,7 +211,7 @@ export function AdminOverview() {
           <CardTitle>Admin Quick Actions</CardTitle>
           <CardDescription>Manage platform content, users, and settings</CardDescription>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <button
             onClick={() => setActiveView('users')}
             className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
@@ -243,6 +243,54 @@ export function AdminOverview() {
             </div>
             <ArrowRight className="h-5 w-5 text-gray-400" />
           </button>
+
+          <Link
+            href="/admin/products"
+            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-purple-50">
+                <Package className="h-5 w-5 text-purple-600" />
+              </div>
+              <div>
+                <div className="font-semibold">Product Management</div>
+                <div className="text-sm text-gray-600">Create and manage products</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <Link
+            href="/admin/product-sales"
+            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-green-50">
+                <ShoppingBag className="h-5 w-5 text-green-600" />
+              </div>
+              <div>
+                <div className="font-semibold">Product Sales</div>
+                <div className="text-sm text-gray-600">View product purchase history</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-gray-400" />
+          </Link>
+
+          <Link
+            href="/my-purchases"
+            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-indigo-50">
+                <FileVideo className="h-5 w-5 text-indigo-600" />
+              </div>
+              <div>
+                <div className="font-semibold">Content Purchases</div>
+                <div className="text-sm text-gray-600">View content purchase history</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 text-gray-400" />
+          </Link>
         </CardContent>
       </Card>
     </div>
