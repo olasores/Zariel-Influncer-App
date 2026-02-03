@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { 
@@ -16,6 +16,54 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+
+interface RevealProps {
+  children: ReactNode;
+  className?: string;
+  animation?: 'animate-fade-in' | 'animate-slide-up' | 'animate-slide-in-left' | 'animate-slide-in-right' | 'animate-scale-in';
+  delay?: number;
+  threshold?: number;
+}
+
+function Reveal({ 
+  children, 
+  className = "", 
+  animation = "animate-slide-up", 
+  delay = 0,
+  threshold = 0.1 
+}: RevealProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold });
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [threshold]);
+
+  return (
+    <div 
+      ref={ref} 
+      className={`${className} ${isVisible ? animation : "opacity-0"}`}
+      style={{ animationDelay: `${delay}s` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -166,34 +214,28 @@ export function LandingPage() {
 
       {/* Features Section */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 md:py-20">
-        <div className="text-center mb-10 md:mb-16 space-y-4">
+        <Reveal className="text-center mb-10 md:mb-16 space-y-4" animation="animate-slide-up">
           <h2 className="text-3xl md:text-5xl font-bold">
             Why Choose <span className="text-accent">Zariel</span>?
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Everything you need to succeed in the creator economy
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {features.map((feature, index) => (
-            <Card 
-              key={index}
-              className="group hover-card glass-card border-none cursor-pointer"
-              style={{ 
-                animationDelay: `${index * 0.1}s`,
-                animation: 'slideUp 0.6s ease-out forwards',
-                opacity: 0
-              }}
-            >
-              <CardContent className="p-6 space-y-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent to-primary/70 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
-              </CardContent>
-            </Card>
+            <Reveal key={index} delay={index * 0.1} animation="animate-slide-up">
+              <Card className="group hover-card glass-card border-none cursor-pointer h-full">
+                <CardContent className="p-6 space-y-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-accent to-primary/70 rounded-xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -202,29 +244,23 @@ export function LandingPage() {
       <div className="relative z-10 glass py-12 md:py-20">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8 md:mb-12">
+            <Reveal className="text-center mb-8 md:mb-12" animation="animate-slide-up">
               <h2 className="text-3xl md:text-5xl font-bold mb-4">
                 Built for <span className="text-accent">Success</span>
               </h2>
               <p className="text-lg md:text-xl text-muted-foreground">
                 Join thousands of creators already growing their business
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               {benefits.map((benefit, index) => (
-                <div 
-                  key={index}
-                  className="flex items-center gap-3 p-4 hover-card glass-card border-none rounded-lg cursor-pointer"
-                  style={{ 
-                    animationDelay: `${index * 0.1}s`,
-                    animation: 'slideInLeft 0.5s ease-out forwards',
-                    opacity: 0
-                  }}
-                >
-                  <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
-                  <span className="font-medium">{benefit}</span>
-                </div>
+                <Reveal key={index} delay={index * 0.1} animation="animate-slide-in-left">
+                  <div className="flex items-center gap-3 p-4 hover-card glass-card border-none rounded-lg cursor-pointer h-full">
+                    <CheckCircle2 className="h-6 w-6 text-accent flex-shrink-0" />
+                    <span className="font-medium">{benefit}</span>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -233,31 +269,33 @@ export function LandingPage() {
 
       {/* CTA Section */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 py-12 md:py-20">
-        <Card className="overflow-hidden glass-card border-primary/30">
-          <CardContent className="p-8 md:p-16 text-center space-y-6 md:space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-5xl font-bold">
-                Ready to Start?
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                Join the revolution and turn your creativity into profit
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-              <Link href="/auth/signup" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto">
-                  Create Free Account
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/auth/login" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto glass border-2 border-accent/30 hover:glass-card transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto text-accent hover:text-accent">
-                  Sign In
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+        <Reveal animation="animate-scale-in">
+          <Card className="overflow-hidden glass-card border-primary/30">
+            <CardContent className="p-8 md:p-16 text-center space-y-6 md:space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-5xl font-bold">
+                  Ready to Start?
+                </h2>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Join the revolution and turn your creativity into profit
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                <Link href="/auth/signup" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto">
+                    Create Free Account
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/auth/login" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto glass border-2 border-accent/30 hover:glass-card transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto text-accent hover:text-accent">
+                    Sign In
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </Reveal>
       </div>
 
       {/* Footer */}
