@@ -120,25 +120,25 @@ export function VisionaryOverview() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((card) => (
-          <Card key={card.title}>
+          <Card key={card.title} className="hover-card glass-card border-none">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
                 {card.title}
               </CardTitle>
-              <div className={`p-2 rounded-lg ${card.bgColor}`}>
+              <div className={`p-2 rounded-lg ${card.bgColor} bg-opacity-20`}>
                 <card.icon className={`h-5 w-5 ${card.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900">{card.value}</div>
-              <p className="text-xs text-gray-500 mt-1">{card.description}</p>
+              <div className="text-2xl font-bold">{card.value}</div>
+              <p className="text-xs text-muted-foreground mt-1">{card.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="glass-card hover-card border-none">
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>
             <CardDescription>Common tasks and shortcuts</CardDescription>
@@ -146,41 +146,41 @@ export function VisionaryOverview() {
           <CardContent className="space-y-2">
             <a
               href="/marketplace"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-gray-200/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 transition-colors"
             >
-              <div className="font-medium text-gray-900">Browse Marketplace</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium">Browse Marketplace</div>
+              <div className="text-sm text-muted-foreground">
                 Find content from creators
               </div>
             </a>
             <a
               href="/token-management"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-gray-200/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 transition-colors"
             >
-              <div className="font-medium text-gray-900">Purchase Zaryo</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium">Purchase Zaryo</div>
+              <div className="text-sm text-muted-foreground">
                 Buy tokens to purchase content
               </div>
             </a>
             <a
               href="/my-purchases"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-gray-200/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 transition-colors"
             >
-              <div className="font-medium text-gray-900">My Purchases</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium">My Purchases</div>
+              <div className="text-sm text-muted-foreground">
                 View purchased content
               </div>
             </a>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="glass-card hover-card border-none">
           <CardHeader>
             <CardTitle>Recent Activity</CardTitle>
             <CardDescription>Your latest transactions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-muted-foreground">
               View your recent transactions in Token Management
             </div>
           </CardContent>

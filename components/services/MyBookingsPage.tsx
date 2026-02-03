@@ -166,13 +166,13 @@ export function MyBookingsPage() {
   };
 
   const renderBookingCard = (booking: Booking) => (
-    <Card key={booking.id} className="mb-4">
+    <Card key={booking.id} className="mb-4 hover-card glass-card border-none">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <CardTitle className="text-lg">{booking.services.title}</CardTitle>
             <div className="flex items-center gap-2 mt-2">
-              <User className="h-4 w-4 text-gray-400" />
+              <User className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
                 Provider: {booking.services.profiles.full_name}
               </span>
@@ -196,18 +196,18 @@ export function MyBookingsPage() {
       <CardContent className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center text-sm">
-            <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+            <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
             {new Date(booking.booking_date).toLocaleString()}
           </div>
           {booking.duration && (
             <div className="flex items-center text-sm">
-              <Clock className="h-4 w-4 mr-2 text-gray-400" />
+              <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
               {booking.duration}
             </div>
           )}
           {booking.services.location && (
             <div className="flex items-center text-sm">
-              <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+              <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
               {booking.services.location}
             </div>
           )}
@@ -220,15 +220,15 @@ export function MyBookingsPage() {
         </div>
 
         {booking.message && (
-          <div className="flex items-start gap-2 p-3 bg-muted rounded-lg">
-            <MessageSquare className="h-4 w-4 mt-0.5 text-gray-400 flex-shrink-0" />
-            <p className="text-sm">{booking.message}</p>
+          <div className="flex items-start gap-2 p-3 bg-white/5 border border-white/10 rounded-lg">
+            <MessageSquare className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+            <p className="text-sm text-muted-foreground">{booking.message}</p>
           </div>
         )}
 
         {booking.status === 'pending' && (
-          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-sm text-yellow-800">
+          <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+            <p className="text-sm text-yellow-600">
               ⏳ Waiting for service provider to review your request
             </p>
           </div>
@@ -236,17 +236,17 @@ export function MyBookingsPage() {
 
         {booking.status === 'confirmed' && (
           <div className="space-y-3">
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-green-800 font-semibold">
+            <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+              <p className="text-sm text-green-600 font-semibold">
                 ✓ Booking confirmed by provider!
               </p>
               <p className="text-sm text-green-700 mt-1">
                 Complete payment to finalize your booking
               </p>
             </div>
-            <div className="flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
               <div>
-                <p className="text-sm font-semibold">Payment Required: {booking.tokens_paid} ZARYO</p>
+                <p className="text-sm font-semibold text-blue-600">Payment Required: {booking.tokens_paid} ZARYO</p>
                 <p className="text-sm text-muted-foreground">
                   Your balance: {profile?.token_balance || 0} ZARYO
                 </p>
@@ -254,6 +254,7 @@ export function MyBookingsPage() {
               <Button 
                 onClick={() => handlePayment(booking.id)}
                 disabled={payingBookingId === booking.id}
+                className="bg-blue-600 hover:bg-blue-700"
               >
                 {payingBookingId === booking.id && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Pay {booking.tokens_paid} ZARYO
@@ -263,27 +264,27 @@ export function MyBookingsPage() {
         )}
 
         {booking.status === 'paid' && (
-          <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-sm text-green-800 font-semibold">
+          <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+            <p className="text-sm text-green-600 font-semibold">
               ✓ Payment completed! Booking confirmed
             </p>
-            <p className="text-sm text-green-700 mt-1">
+            <p className="text-sm text-green-600 mt-1">
               Contact: {booking.services.profiles.email}
             </p>
           </div>
         )}
 
         {booking.status === 'cancelled' && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-800">
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+            <p className="text-sm text-red-600">
               This booking was cancelled
             </p>
           </div>
         )}
 
         {booking.status === 'completed' && (
-          <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-800">
+          <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+            <p className="text-sm text-blue-600">
               Service completed
             </p>
           </div>
@@ -304,29 +305,29 @@ export function MyBookingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900">My Bookings</h2>
-        <p className="text-gray-600 mt-1">Track your service booking requests</p>
+        <h2 className="text-3xl font-bold">My Bookings</h2>
+        <p className="text-muted-foreground mt-1">Track your service booking requests</p>
       </div>
 
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="pending">
+        <TabsList className="flex flex-col h-auto sm:grid sm:h-10 sm:grid-cols-4 bg-transparent sm:bg-white/5 border-none sm:border sm:border-white/10 gap-2 sm:gap-0 p-0 sm:p-1">
+          <TabsTrigger value="pending" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Pending ({pendingBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="confirmed">
+          <TabsTrigger value="confirmed" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Confirmed ({confirmedBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="completed">
+          <TabsTrigger value="completed" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Completed ({completedBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="cancelled">
+          <TabsTrigger value="cancelled" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Cancelled ({cancelledBookings.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="pending" className="mt-6">
           {pendingBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No pending bookings</p>
               </CardContent>
@@ -338,7 +339,7 @@ export function MyBookingsPage() {
 
         <TabsContent value="confirmed" className="mt-6">
           {confirmedBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No confirmed bookings</p>
               </CardContent>
@@ -350,7 +351,7 @@ export function MyBookingsPage() {
 
         <TabsContent value="completed" className="mt-6">
           {completedBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No completed bookings</p>
               </CardContent>
@@ -362,7 +363,7 @@ export function MyBookingsPage() {
 
         <TabsContent value="cancelled" className="mt-6">
           {cancelledBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No cancelled bookings</p>
               </CardContent>

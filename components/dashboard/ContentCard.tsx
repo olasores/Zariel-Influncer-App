@@ -180,22 +180,22 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="relative aspect-video bg-muted">
+    <Card className="overflow-hidden glass-card hover-card border-primary/20 bg-white/5">
+      <div className="relative aspect-video bg-muted/20">
         {renderPreview()}
-        <Badge className={`absolute top-2 right-2 ${getStatusColor(content.status)}`}>
+        <Badge className={`absolute top-3 right-3 ${getStatusColor(content.status)} shadow-lg`}>
           {content.status}
         </Badge>
-        <Badge className="absolute top-2 left-2 bg-white text-gray-700 flex items-center gap-1">
+        <Badge className="absolute top-3 left-3 bg-white/90 glass backdrop-blur-md text-primary flex items-center gap-1 shadow-lg border-white/20">
           {getContentTypeIcon(content.content_type)}
           {getContentTypeLabel(content.content_type)}
         </Badge>
       </div>
-      <CardContent className="p-4 space-y-2">
+      <CardContent className="p-4 space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-semibold text-lg line-clamp-1 flex-1">{content.title}</h3>
+          <h3 className="font-semibold text-lg line-clamp-1 flex-1 text-primary">{content.title}</h3>
           {creatorProfile && (
-            <Badge variant="outline" className="flex items-center gap-1">
+            <Badge variant="outline" className="flex items-center gap-1 border-primary/20 text-muted-foreground bg-primary/5">
               {creatorProfile.role === 'innovator' || creatorProfile.role === 'visionary' ? (
                 <>
                   <Building2 className="h-3 w-3" />
@@ -213,8 +213,8 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
         {content.description && (
           <p className="text-sm text-muted-foreground line-clamp-2">{content.description}</p>
         )}
-        <div className="flex items-center justify-between pt-2">
-          <div className="flex items-center text-yellow-600">
+        <div className="flex items-center justify-between pt-2 border-t border-primary/10">
+          <div className="flex items-center text-accent">
             <Coins className="h-4 w-4 mr-1" />
             <span className="font-semibold">{content.price_tokens} Zaryo</span>
           </div>

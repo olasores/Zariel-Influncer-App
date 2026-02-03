@@ -74,14 +74,14 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
 
   if (!subscription) {
     return (
-      <Card>
+      <Card className="glass-card border-none">
         <CardHeader>
           <CardTitle>Subscription Required</CardTitle>
           <CardDescription>Choose a plan to start uploading content</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-2">
+            <Card className="border-2 hover-card glass-card">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   Monthly Plan
@@ -126,7 +126,7 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-blue-500">
+            <Card className="border-2 border-blue-500/50 hover-card glass-card">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   Yearly Plan
@@ -189,7 +189,7 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
   }
 
   return (
-    <Card>
+    <Card className="glass-card hover-card border-none">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           Active Subscription
@@ -209,7 +209,7 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
           </Alert>
         )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="flex items-start space-x-3 p-4 bg-muted rounded-lg">
+          <div className="flex items-start space-x-3 p-4 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-lg">
             <CreditCard className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
               <p className="text-sm font-medium">Plan Type</p>
@@ -217,7 +217,7 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-4 bg-muted rounded-lg">
+          <div className="flex items-start space-x-3 p-4 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-lg">
             <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
               <p className="text-sm font-medium">Period End</p>
@@ -227,7 +227,7 @@ export function CompanySubscriptionCard({ subscription, onUpdate }: CompanySubsc
             </div>
           </div>
 
-          <div className="flex items-start space-x-3 p-4 bg-muted rounded-lg">
+          <div className="flex items-start space-x-3 p-4 bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-lg">
             <CheckCircle2 className="h-5 w-5 text-muted-foreground mt-0.5" />
             <div>
               <p className="text-sm font-medium">Status</p>

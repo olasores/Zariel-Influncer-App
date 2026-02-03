@@ -151,23 +151,23 @@ export function AdminProductManager() {
       </div>
 
       {products.length > 0 && (
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader>
             <CardTitle>Filter Products</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 flex-1">
-                <Search className="h-4 w-4 text-gray-400" />
+                <Search className="h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="max-w-md"
+                  className="max-w-md bg-white/5 border-white/10"
                 />
               </div>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 bg-white/5 border-white/10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -186,7 +186,7 @@ export function AdminProductManager() {
         </Card>
       )}
 
-      <Card>
+      <Card className="hover-card glass-card border-none">
         <CardHeader>
           <CardTitle>Products ({filteredProducts.length})</CardTitle>
           <CardDescription>All marketplace products</CardDescription>
@@ -194,11 +194,11 @@ export function AdminProductManager() {
         <CardContent>
           {filteredProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <Package className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <Package className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">
                 {searchQuery || categoryFilter !== 'all' ? 'No products found' : 'No products yet'}
               </h3>
-              <p className="text-gray-500 text-center">
+              <p className="text-muted-foreground text-center">
                 {searchQuery || categoryFilter !== 'all'
                   ? 'Try adjusting your filters'
                   : 'Start by creating your first product'}
@@ -208,7 +208,7 @@ export function AdminProductManager() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-white/5 border-white/10">
                     <TableHead>Product</TableHead>
                     <TableHead>Category</TableHead>
                     <TableHead>Price</TableHead>
@@ -220,7 +220,7 @@ export function AdminProductManager() {
                 </TableHeader>
                 <TableBody>
                   {filteredProducts.map((product) => (
-                    <TableRow key={product.id}>
+                    <TableRow key={product.id} className="hover:bg-white/5 border-white/10">
                       <TableCell>
                         <div className="flex items-center space-x-3">
                           {product.image_url && (
@@ -233,7 +233,7 @@ export function AdminProductManager() {
                           <div>
                             <div className="font-medium">{product.title}</div>
                             {product.description && (
-                              <div className="text-sm text-gray-500 truncate max-w-xs">
+                              <div className="text-sm text-muted-foreground truncate max-w-xs">
                                 {product.description}
                               </div>
                             )}
@@ -241,24 +241,25 @@ export function AdminProductManager() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline">{product.category}</Badge>
+                        <Badge variant="outline" className="bg-white/10">{product.category}</Badge>
                       </TableCell>
                       <TableCell className="font-medium">
                         {product.price_tokens} Zaryo
                       </TableCell>
                       <TableCell>{getStockDisplay(product.stock_quantity)}</TableCell>
                       <TableCell>{getStatusBadge(product.status)}</TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="text-sm text-muted-foreground">
                         {new Date(product.created_at).toLocaleDateString()}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center space-x-2">
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="bg-white/5 border-white/10 hover:bg-white/10">
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button 
                             size="sm" 
                             variant="outline" 
+                            className="bg-white/5 border-white/10 hover:bg-white/10 hover:text-red-400"
                             onClick={() => handleDeleteProduct(product.id)}
                           >
                             <Trash2 className="h-4 w-4" />

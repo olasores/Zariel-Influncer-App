@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -13,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Coins, LogOut, Settings } from 'lucide-react';
+import { Coins, LogOut, Settings, Search } from 'lucide-react';
 import { AccountSettingsDialog } from '@/components/layout/AccountSettingsDialog';
 
 export function Header() {
@@ -52,15 +53,31 @@ export function Header() {
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-            ZARIEL & Co
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent leading-none">
+              Zariel & Co
+            </h1>
+            <span className="text-xs text-muted-foreground leading-none">
+              Influencer Marketplace
+            </span>
+          </div>
           <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
             {profile.role === 'creator' ? 'Tier 1 - Creator' : 
              profile.role === 'innovator' ? 'Tier 2 - Innovator' : 
              profile.role === 'visionary' ? 'Tier 3 - Visionary' : 
              profile.role === 'admin' ? 'Admin' : 'User'}
           </span>
+        </div>
+
+        <div className="flex-1 max-w-xl mx-8 hidden md:block">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search marketplace, creators, services..."
+              className="w-full bg-muted/50 pl-9 glass-input"
+            />
+          </div>
         </div>
 
         <div className="flex items-center space-x-4">

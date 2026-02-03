@@ -66,18 +66,19 @@ export function CreatorDashboard() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="container mx-auto px-1 sm:px-4 py-8 space-y-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Creator Dashboard</h1>
           <p className="text-muted-foreground">Manage your content portfolio</p>
         </div>
-        <div className="flex flex-col items-end gap-2">
-          <div className={`relative ${uploadLocked ? 'pointer-events-none blur-[1px] opacity-60' : ''}`}>
+        <div className="flex flex-col items-start sm:items-end gap-2 w-full sm:w-auto">
+          <div className={`relative w-full sm:w-auto ${uploadLocked ? 'pointer-events-none blur-[1px] opacity-60' : ''}`}>
             <Button
               onClick={() => setUploadDialogOpen(true)}
               disabled={uploadLocked}
               size="lg"
+              className="w-full sm:w-auto"
             >
               <Upload className="mr-2 h-4 w-4" />
               Upload Content
@@ -93,7 +94,7 @@ export function CreatorDashboard() {
       </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Content</CardTitle>

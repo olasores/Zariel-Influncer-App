@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <!-- Z Symbol (top) -->
+  <path d="M140 20 L380 20 Q420 20 420 60 Q420 80 400 100 L200 180 L380 180 Q420 180 420 220 Q420 260 380 260 L140 260 Q100 260 100 220 Q100 200 120 180 L320 100 L140 100 Q100 100 100 60 Q100 20 140 20 Z" fill="black"/>
+  
+  <!-- ZARIEL & CO text -->
+  <text x="25" y="320" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="black" letter-spacing="8">ZARIEL &amp; CO</text>
+  
+  <!-- Second Z with curve (bottom) -->
+  <path d="M120 340 L280 340 Q320 340 320 380 Q320 400 300 420 L200 460 Q180 480 140 480 Q100 480 80 440 Q80 420 100 400 L200 380 L120 380 Q80 380 80 340 Q80 300 120 300 L280 300 Q320 300 320 340 Z" fill="black"/>
+  
+  <!-- Curved swoosh -->
+  <path d="M320 420 Q400 400 460 450 Q480 470 460 490 Q400 520 320 480" fill="black" stroke="black" stroke-width="2"/>
+</svg>

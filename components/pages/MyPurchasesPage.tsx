@@ -132,13 +132,13 @@ export function MyPurchasesPage() {
         
         <TabsContent value="videos" className="space-y-4">
           {purchases.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <FileVideo className="h-12 w-12 text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
+                <FileVideo className="h-12 w-12 text-muted-foreground mb-4" />
+                <h3 className="text-lg font-medium mb-2">
                   No content purchases yet
                 </h3>
-                <p className="text-gray-500 text-center mb-4">
+                <p className="text-muted-foreground text-center mb-4">
                   Browse the marketplace to find content from creators
                 </p>
                 <Button asChild>
@@ -149,7 +149,7 @@ export function MyPurchasesPage() {
           ) : (
             <div className="space-y-4">
               {purchases.map((purchase) => (
-                <Card key={purchase.id}>
+                <Card key={purchase.id} className="hover-card glass-card border-none">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       {purchase.videos.thumbnail_url ? (
@@ -159,18 +159,18 @@ export function MyPurchasesPage() {
                           className="w-32 h-32 object-cover rounded-lg"
                         />
                       ) : (
-                        <div className="w-32 h-32 bg-gray-200 rounded-lg flex items-center justify-center">
-                          <ShoppingBag className="h-8 w-8 text-gray-400" />
+                        <div className="w-32 h-32 bg-white/10 rounded-lg flex items-center justify-center">
+                          <ShoppingBag className="h-8 w-8 text-muted-foreground" />
                         </div>
                       )}
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-900">
+                            <h3 className="text-lg font-semibold">
                               {purchase.videos.title}
                             </h3>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-sm text-muted-foreground mt-1">
                               by {purchase.profiles.full_name || purchase.profiles.email}
                             </p>
                           </div>
@@ -188,12 +188,12 @@ export function MyPurchasesPage() {
                         </div>
 
                         {purchase.videos.description && (
-                          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                             {purchase.videos.description}
                           </p>
                         )}
 
-                        <div className="flex items-center gap-6 text-sm text-gray-500 mb-4">
+                        <div className="flex items-center gap-6 text-sm text-muted-foreground mb-4">
                           <div className="flex items-center">
                             <Calendar className="mr-1.5 h-4 w-4" />
                             {format(new Date(purchase.created_at), 'MMM dd, yyyy')}

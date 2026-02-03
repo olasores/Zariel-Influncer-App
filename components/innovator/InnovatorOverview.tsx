@@ -119,25 +119,25 @@ export function InnovatorOverview() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((card) => (
-          <Card key={card.title}>
+        {statCards.map((stat, index) => (
+          <Card key={index} className="hover-card glass-card border-none">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                {card.title}
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                {stat.title}
               </CardTitle>
-              <div className={`p-2 rounded-lg ${card.bgColor}`}>
-                <card.icon className={`h-5 w-5 ${card.color}`} />
+              <div className={`p-2 rounded-full ${stat.bgColor} bg-opacity-20`}>
+                <stat.icon className={`h-4 w-4 ${stat.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-gray-900">{card.value}</div>
-              <p className="text-xs text-gray-500 mt-1">{card.description}</p>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {stat.description}
+              </p>
             </CardContent>
           </Card>
         ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      </div>      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Quick Actions</CardTitle>

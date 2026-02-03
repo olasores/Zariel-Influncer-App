@@ -118,8 +118,8 @@ export function ServicesMarketplace() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Services Marketplace</h2>
-          <p className="text-gray-600 mt-1">
+          <h2 className="text-3xl font-bold">Services Marketplace</h2>
+          <p className="text-muted-foreground mt-1">
             Discover and book professional services
           </p>
         </div>
@@ -129,18 +129,19 @@ export function ServicesMarketplace() {
         </Button>
       </div>
 
-      <Card>
+      <Card className="hover-card glass-card border-none">
         <CardHeader>
           <CardTitle>Search Services</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex gap-4">
             <div className="flex-1 flex items-center gap-2">
-              <Search className="h-4 w-4 text-gray-400" />
+              <Search className="h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search services by title, description, category, or location..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-white/5 border-white/10"
               />
             </div>
           </div>
@@ -150,7 +151,7 @@ export function ServicesMarketplace() {
       {loading ? (
         <div className="text-center py-8">Loading services...</div>
       ) : filteredServices.length === 0 ? (
-        <Card>
+        <Card className="glass-card border-none">
           <CardContent className="py-12 text-center">
             <p className="text-muted-foreground">No services found</p>
           </CardContent>
@@ -158,13 +159,13 @@ export function ServicesMarketplace() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredServices.map((service) => (
-            <Card key={service.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            <Card key={service.id} className="overflow-hidden hover-card glass-card border-none">
               {service.image_url && (
-                <div className="aspect-video bg-muted">
+                <div className="aspect-video bg-muted overflow-hidden">
                   <img
                     src={service.image_url}
                     alt={service.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
               )}
@@ -176,7 +177,7 @@ export function ServicesMarketplace() {
                       by {service.profiles.full_name}
                     </p>
                   </div>
-                  <Badge variant="secondary">
+                  <Badge variant="secondary" className="bg-white/10">
                     {categoryLabels[service.category]}
                   </Badge>
                 </div>
@@ -191,7 +192,7 @@ export function ServicesMarketplace() {
                 <div className="space-y-2">
                   {service.location && (
                     <div className="flex items-center text-sm">
-                      <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+                      <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
                       {service.location}
                     </div>
                   )}

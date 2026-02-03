@@ -102,13 +102,13 @@ export function UserProductPurchases() {
       </div>
 
       {purchases.length > 0 && (
-        <Card>
+        <Card className="glass-card border-none mb-6">
           <CardHeader>
             <CardTitle>Search Purchases</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Search className="h-4 w-4 text-gray-400" />
+              <Search className="h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search by product or seller..."
                 value={searchQuery}
@@ -120,7 +120,7 @@ export function UserProductPurchases() {
         </Card>
       )}
 
-      <Card>
+      <Card className="glass-card border-none">
         <CardHeader>
           <CardTitle>Purchase History ({filteredPurchases.length})</CardTitle>
           <CardDescription>All products you've purchased</CardDescription>
@@ -128,11 +128,11 @@ export function UserProductPurchases() {
         <CardContent>
           {filteredPurchases.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <Package className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <Package className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">
                 {searchQuery ? 'No purchases found' : 'No product purchases yet'}
               </h3>
-              <p className="text-gray-500 text-center">
+              <p className="text-muted-foreground text-center">
                 {searchQuery
                   ? 'Try a different search term'
                   : 'Browse the products marketplace to make your first purchase'}

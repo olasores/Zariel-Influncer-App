@@ -145,108 +145,108 @@ export function AdminDashboard() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Total Users
                   </CardTitle>
                   <Users className="h-5 w-5 text-blue-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalUsers.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Registered accounts</p>
+                  <p className="text-xs text-muted-foreground mt-1">Registered accounts</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Creators
                   </CardTitle>
                   <Users className="h-5 w-5 text-purple-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalCreators.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Content creators</p>
+                  <p className="text-xs text-muted-foreground mt-1">Content creators</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Companies
                   </CardTitle>
                   <Users className="h-5 w-5 text-cyan-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalCompanies.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Company accounts</p>
+                  <p className="text-xs text-muted-foreground mt-1">Company accounts</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Total Content
                   </CardTitle>
                   <FileVideo className="h-5 w-5 text-green-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalContent.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Uploaded items</p>
+                  <p className="text-xs text-muted-foreground mt-1">Uploaded items</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Transactions
                   </CardTitle>
                   <ShoppingBag className="h-5 w-5 text-orange-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalTransactions.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Total transactions</p>
+                  <p className="text-xs text-muted-foreground mt-1">Total transactions</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Tokens in Circulation
                   </CardTitle>
                   <Coins className="h-5 w-5 text-yellow-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     {stats.totalTokensInCirculation.toLocaleString()}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Zaryo tokens</p>
+                  <p className="text-xs text-muted-foreground mt-1">Zaryo tokens</p>
                 </CardContent>
               </Card>
 
-              <Card>
+              <Card className="hover-card glass-card border-none">
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
                     Total Revenue
                   </CardTitle>
                   <DollarSign className="h-5 w-5 text-green-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold">
                     ${stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">From token sales</p>
+                  <p className="text-xs text-muted-foreground mt-1">From token sales</p>
                 </CardContent>
               </Card>
             </div>

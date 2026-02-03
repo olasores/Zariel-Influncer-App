@@ -121,7 +121,7 @@ export function CompanyDashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Marketplace</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -132,7 +132,7 @@ export function CompanyDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">My Content</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
@@ -143,7 +143,7 @@ export function CompanyDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Token Balance</CardTitle>
             <Coins className="h-4 w-4 text-muted-foreground" />
@@ -154,7 +154,7 @@ export function CompanyDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Purchases</CardTitle>
             <ShoppingCart className="h-4 w-4 text-muted-foreground" />
@@ -188,7 +188,7 @@ export function CompanyDashboard() {
           </div>
 
           {filteredContent.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <p className="text-muted-foreground">
                   {searchQuery ? 'No content matches your search' : 'No content available yet'}
@@ -212,7 +212,7 @@ export function CompanyDashboard() {
 
         <TabsContent value="mycontent" className="space-y-4">
           {myContent.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <FileText className="h-12 w-12 text-muted-foreground mb-4" />
                 <p className="text-muted-foreground mb-4">No content uploaded yet</p>
@@ -239,7 +239,7 @@ export function CompanyDashboard() {
         </TabsContent>
 
         <TabsContent value="purchases">
-          <Card>
+          <Card className="glass-card border-none">
             <CardHeader>
               <CardTitle>Purchase History</CardTitle>
               <CardDescription>Content concepts you've acquired</CardDescription>
@@ -254,7 +254,7 @@ export function CompanyDashboard() {
                   {purchases.map((purchase) => (
                     <div
                       key={purchase.id}
-                      className="flex items-center justify-between p-4 border rounded-lg"
+                      className="flex items-center justify-between p-4 border rounded-lg bg-white/5"
                     >
                       <div>
                         <p className="font-medium">Purchase #{purchase.id.slice(0, 8)}</p>
@@ -275,18 +275,18 @@ export function CompanyDashboard() {
         </TabsContent>
 
         <TabsContent value="tokens">
-          <Card>
+          <Card className="glass-card border-none">
             <CardHeader>
               <CardTitle>Zaryo Management</CardTitle>
               <CardDescription>Purchase Zaryo tokens and manage your balance</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
+                <div className="flex justify-between items-center p-4 bg-muted/50 rounded-lg">
                   <span className="font-medium">Current Balance</span>
                   <span className="text-2xl font-bold">{wallet?.balance.toLocaleString() || 0} Zaryo</span>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-muted rounded-lg">
+                <div className="flex justify-between items-center p-4 bg-muted/50 rounded-lg">
                   <span className="font-medium">Total Spent</span>
                   <span className="text-lg font-semibold text-red-600">
                     -{wallet?.total_spent.toLocaleString() || 0} Zaryo
@@ -295,7 +295,7 @@ export function CompanyDashboard() {
                 <Button className="w-full" size="lg" onClick={() => setTokenDialogOpen(true)}>
                   Buy Zaryo
                 </Button>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-blue-50/50 border border-blue-200/50 rounded-lg p-4">
                   <p className="text-sm text-blue-900">
                     Zaryo is the internal currency of the ZARIEL ecosystem. Purchase Zaryo at $1 per 10 Zaryo to buy content from creators and companies.
                   </p>

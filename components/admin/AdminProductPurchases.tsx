@@ -123,45 +123,45 @@ export function AdminProductPurchases() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Product Sales</h2>
-          <p className="text-gray-600 mt-1">Track product purchases and customer information</p>
+          <h2 className="text-3xl font-bold">Product Sales</h2>
+          <p className="text-muted-foreground mt-1">Track product purchases and customer information</p>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Card>
+          <Card className="hover-card glass-card border-none">
             <CardContent className="p-4">
               <div className="text-2xl font-bold text-green-600">{totalRevenue}</div>
-              <div className="text-sm text-gray-500">Total Revenue (Zaryo)</div>
+              <div className="text-sm text-muted-foreground">Total Revenue (Zaryo)</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="hover-card glass-card border-none">
             <CardContent className="p-4">
               <div className="text-2xl font-bold text-blue-600">{totalSales}</div>
-              <div className="text-sm text-gray-500">Total Sales</div>
+              <div className="text-sm text-muted-foreground">Total Sales</div>
             </CardContent>
           </Card>
         </div>
       </div>
 
       {purchases.length > 0 && (
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader>
             <CardTitle>Search Sales</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Search className="h-4 w-4 text-gray-400" />
+              <Search className="h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search by product or buyer..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="max-w-md"
+                className="max-w-md bg-white/5 border-white/10"
               />
             </div>
           </CardContent>
         </Card>
       )}
 
-      <Card>
+      <Card className="hover-card glass-card border-none">
         <CardHeader>
           <CardTitle>Sales History ({filteredPurchases.length})</CardTitle>
           <CardDescription>All product purchases made by users</CardDescription>
@@ -169,11 +169,11 @@ export function AdminProductPurchases() {
         <CardContent>
           {filteredPurchases.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <ShoppingBag className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <ShoppingBag className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">
                 {searchQuery ? 'No purchases found' : 'No purchases yet'}
               </h3>
-              <p className="text-gray-500 text-center">
+              <p className="text-muted-foreground text-center">
                 {searchQuery
                   ? 'Try a different search term'
                   : 'Product purchases will appear here once users start buying'}
@@ -183,7 +183,7 @@ export function AdminProductPurchases() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-white/5 border-white/10">
                     <TableHead>Product</TableHead>
                     <TableHead>Buyer</TableHead>
                     <TableHead>Tier</TableHead>
@@ -195,12 +195,12 @@ export function AdminProductPurchases() {
                 </TableHeader>
                 <TableBody>
                   {filteredPurchases.map((purchase) => (
-                    <TableRow key={purchase.id}>
+                    <TableRow key={purchase.id} className="hover:bg-white/5 border-white/10">
                       <TableCell>
                         <div>
                           <div className="font-medium">{purchase.product.title}</div>
-                          <div className="text-sm text-gray-500">
-                            <Badge variant="outline" className="text-xs">
+                          <div className="text-sm text-muted-foreground">
+                            <Badge variant="outline" className="text-xs bg-white/10 text-muted-foreground">
                               {purchase.product.category}
                             </Badge>
                           </div>
@@ -209,7 +209,7 @@ export function AdminProductPurchases() {
                       <TableCell>
                         <div>
                           <div className="font-medium">{purchase.buyer.full_name}</div>
-                          <div className="text-xs text-gray-500">{purchase.buyer.email}</div>
+                          <div className="text-xs text-muted-foreground">{purchase.buyer.email}</div>
                         </div>
                       </TableCell>
                       <TableCell>
@@ -228,7 +228,7 @@ export function AdminProductPurchases() {
                           {purchase.status.toUpperCase()}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="text-sm text-muted-foreground">
                         {new Date(purchase.created_at).toLocaleDateString()}
                       </TableCell>
                     </TableRow>

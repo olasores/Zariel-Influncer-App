@@ -137,13 +137,13 @@ export function MyServicesManager() {
   };
 
   const renderBookingCard = (booking: Booking) => (
-    <Card key={booking.id} className="mb-4">
+    <Card key={booking.id} className="mb-4 hover-card glass-card border-none">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <CardTitle className="text-lg">{booking.services.title}</CardTitle>
             <div className="flex items-center gap-2 mt-2">
-              <User className="h-4 w-4 text-gray-400" />
+              <User className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm text-muted-foreground">
                 {booking.profiles.full_name}
               </span>
@@ -170,18 +170,18 @@ export function MyServicesManager() {
       <CardContent className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center text-sm">
-            <Calendar className="h-4 w-4 mr-2 text-gray-400" />
+            <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
             {new Date(booking.booking_date).toLocaleString()}
           </div>
           {booking.duration && (
             <div className="flex items-center text-sm">
-              <Clock className="h-4 w-4 mr-2 text-gray-400" />
+              <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
               {booking.duration}
             </div>
           )}
           {booking.services.location && (
             <div className="flex items-center text-sm">
-              <MapPin className="h-4 w-4 mr-2 text-gray-400" />
+              <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
               {booking.services.location}
             </div>
           )}
@@ -194,9 +194,9 @@ export function MyServicesManager() {
         </div>
 
         {booking.message && (
-          <div className="flex items-start gap-2 p-3 bg-muted rounded-lg">
-            <MessageSquare className="h-4 w-4 mt-0.5 text-gray-400 flex-shrink-0" />
-            <p className="text-sm">{booking.message}</p>
+          <div className="flex items-start gap-2 p-3 bg-white/5 rounded-lg border border-white/10">
+            <MessageSquare className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
+            <p className="text-sm text-muted-foreground">{booking.message}</p>
           </div>
         )}
 
@@ -213,7 +213,7 @@ export function MyServicesManager() {
               size="sm"
               variant="outline"
               onClick={() => updateBookingStatus(booking.id, 'cancelled')}
-              className="flex-1"
+              className="flex-1 bg-white/5 border-white/10 hover:bg-white/10 hover:text-red-400"
             >
               Decline
             </Button>
@@ -221,8 +221,8 @@ export function MyServicesManager() {
         )}
 
         {booking.status === 'confirmed' && (
-          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <p className="text-sm text-yellow-800">
+          <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
+            <p className="text-sm text-yellow-600">
               ⏳ Waiting for customer to complete payment
             </p>
           </div>
@@ -233,7 +233,7 @@ export function MyServicesManager() {
             size="sm"
             variant="outline"
             onClick={() => updateBookingStatus(booking.id, 'completed')}
-            className="w-full"
+            className="w-full bg-white/5 border-white/10 hover:bg-white/10"
           >
             Mark as Completed
           </Button>
@@ -254,29 +254,29 @@ export function MyServicesManager() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-gray-900">Booking Requests</h2>
-        <p className="text-gray-600 mt-1">Manage booking requests for your services</p>
+        <h2 className="text-3xl font-bold">Booking Requests</h2>
+        <p className="text-muted-foreground mt-1">Manage booking requests for your services</p>
       </div>
 
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="pending">
+        <TabsList className="flex flex-col h-auto sm:grid sm:h-10 sm:grid-cols-4 bg-transparent sm:bg-white/5 border-none sm:border sm:border-white/10 gap-2 sm:gap-0 p-0 sm:p-1">
+          <TabsTrigger value="pending" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Pending ({pendingBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="confirmed">
+          <TabsTrigger value="confirmed" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Confirmed ({confirmedBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="completed">
+          <TabsTrigger value="completed" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Completed ({completedBookings.length})
           </TabsTrigger>
-          <TabsTrigger value="cancelled">
+          <TabsTrigger value="cancelled" className="w-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border sm:border-none border-white/10 bg-white/5 sm:bg-transparent">
             Cancelled ({cancelledBookings.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="pending" className="mt-6">
           {pendingBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No pending bookings</p>
               </CardContent>
@@ -288,7 +288,7 @@ export function MyServicesManager() {
 
         <TabsContent value="confirmed" className="mt-6">
           {confirmedBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No confirmed bookings</p>
               </CardContent>
@@ -300,7 +300,7 @@ export function MyServicesManager() {
 
         <TabsContent value="completed" className="mt-6">
           {completedBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No completed bookings</p>
               </CardContent>
@@ -312,7 +312,7 @@ export function MyServicesManager() {
 
         <TabsContent value="cancelled" className="mt-6">
           {cancelledBookings.length === 0 ? (
-            <Card>
+            <Card className="glass-card border-none">
               <CardContent className="py-12 text-center">
                 <p className="text-muted-foreground">No cancelled bookings</p>
               </CardContent>

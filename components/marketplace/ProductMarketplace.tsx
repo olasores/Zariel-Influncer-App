@@ -173,14 +173,14 @@ export function ProductMarketplace() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Product Marketplace</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-3xl font-bold">Product Marketplace</h1>
+          <p className="text-muted-foreground mt-1">
             Discover and purchase amazing products using your Zaryo tokens
           </p>
         </div>
         {profile && (
           <div className="text-right">
-            <div className="text-sm text-gray-500">Your Balance</div>
+            <div className="text-sm text-muted-foreground">Your Balance</div>
             <div className="text-lg font-semibold text-green-600">
               {profile.token_balance || 0} Zaryo
             </div>
@@ -189,23 +189,23 @@ export function ProductMarketplace() {
       </div>
 
       {products.length > 0 && (
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader>
             <CardTitle>Filter Products</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 flex-1">
-                <Search className="h-4 w-4 text-gray-400" />
+                <Search className="h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="max-w-md"
+                  className="max-w-md bg-white/5 border-white/10"
                 />
               </div>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 bg-white/5 border-white/10">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -226,11 +226,11 @@ export function ProductMarketplace() {
 
       {filteredProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12">
-          <Package className="h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <Package className="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 className="text-lg font-medium mb-2">
             {searchQuery || categoryFilter !== 'all' ? 'No products found' : 'No products available'}
           </h3>
-          <p className="text-gray-500 text-center">
+          <p className="text-muted-foreground text-center">
             {searchQuery || categoryFilter !== 'all'
               ? 'Try adjusting your search or filters'
               : 'Check back later for new products'}
@@ -239,13 +239,13 @@ export function ProductMarketplace() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product) => (
-            <Card key={product.id} className="overflow-hidden">
+            <Card key={product.id} className="overflow-hidden hover-card glass-card border-none">
               {product.image_url && (
                 <div className="aspect-video overflow-hidden">
                   <img 
                     src={product.image_url} 
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
               )}
@@ -257,12 +257,12 @@ export function ProductMarketplace() {
                       By {product.admin.full_name}
                     </CardDescription>
                   </div>
-                  <Badge variant="outline">{product.category}</Badge>
+                  <Badge variant="outline" className="bg-white/10">{product.category}</Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 {product.description && (
-                  <p className="text-sm text-gray-600 mb-4">{product.description}</p>
+                  <p className="text-sm text-muted-foreground mb-4">{product.description}</p>
                 )}
                 
                 <div className="flex items-center justify-between mb-4">

@@ -188,60 +188,60 @@ export function TokenManagementPage() {
 
       {/* Wallet Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Current Balance
             </CardTitle>
-            <div className="p-2 rounded-lg bg-yellow-50">
+            <div className="p-2 rounded-lg bg-yellow-50 bg-opacity-20">
               <Coins className="h-5 w-5 text-yellow-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold">
               {currentBalance.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500 mt-1">Zaryo available</p>
+            <p className="text-xs text-muted-foreground mt-1">Zaryo available</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Earned
             </CardTitle>
-            <div className="p-2 rounded-lg bg-green-50">
+            <div className="p-2 rounded-lg bg-green-50 bg-opacity-20">
               <TrendingUp className="h-5 w-5 text-green-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold">
               {totalEarned.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500 mt-1">Zaryo earned</p>
+            <p className="text-xs text-muted-foreground mt-1">Zaryo earned</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="hover-card glass-card border-none">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Spent
             </CardTitle>
-            <div className="p-2 rounded-lg bg-red-50">
+            <div className="p-2 rounded-lg bg-red-50 bg-opacity-20">
               <TrendingDown className="h-5 w-5 text-red-600" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+            <div className="text-2xl font-bold">
               {totalSpent.toLocaleString()}
             </div>
-            <p className="text-xs text-gray-500 mt-1">Zaryo spent</p>
+            <p className="text-xs text-muted-foreground mt-1">Zaryo spent</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Redeem Tokens Section */}
-      <Card>
+      <Card className="glass-card border-none">
         <CardHeader>
           <CardTitle>Redeem Tokens</CardTitle>
           <CardDescription>
@@ -251,11 +251,11 @@ export function TokenManagementPage() {
         <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="text-sm text-muted-foreground mb-2">
                 You can redeem your earned tokens for cash payment. An admin will review your
                 request and process the payment through your preferred method.
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 Current balance: <span className="font-semibold text-yellow-600">{currentBalance.toLocaleString()} Zaryo</span>
               </p>
             </div>
@@ -273,7 +273,7 @@ export function TokenManagementPage() {
       </Card>
 
       {/* Purchase Tokens */}
-      <Card>
+      <Card className="glass-card border-none">
         <CardHeader>
           <CardTitle>Purchase Zaryo Tokens</CardTitle>
           <CardDescription>
@@ -285,19 +285,19 @@ export function TokenManagementPage() {
             {STRIPE_PRODUCTS.filter(p => p.mode === 'payment').map((product) => (
               <div
                 key={product.id}
-                className="border rounded-lg p-4 space-y-3"
+                className="hover-card glass-card border border-primary/20 rounded-lg p-4 space-y-3 cursor-pointer"
+                onClick={() => handlePurchaseZaryo(product.id)}
               >
                 <div>
-                  <div className="text-xl font-bold text-gray-900">
+                  <div className="text-xl font-bold">
                     {product.name}
                   </div>
-                  <div className="text-2xl font-bold text-blue-600 mt-1">
+                  <div className="text-2xl font-bold text-blue-500 mt-1">
                     ${product.price}
                   </div>
                 </div>
                 <Button
                   className="w-full"
-                  onClick={() => handlePurchaseZaryo(product.id)}
                   disabled={purchaseLoading !== null}
                 >
                   {purchaseLoading === product.id ? (
@@ -320,7 +320,7 @@ export function TokenManagementPage() {
 
       {/* Redemption Requests History */}
       {redemptionRequests.length > 0 && (
-        <Card>
+        <Card className="glass-card border-none">
           <CardHeader>
             <CardTitle>Redemption Requests</CardTitle>
             <CardDescription>Your token redemption request history</CardDescription>
@@ -330,21 +330,21 @@ export function TokenManagementPage() {
               {redemptionRequests.map((request) => (
                 <div
                   key={request.id}
-                  className="flex items-center justify-between p-3 border rounded-lg"
+                  className="flex items-center justify-between p-3 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-yellow-50">
+                    <div className="p-2 rounded-lg bg-yellow-50 bg-opacity-20">
                       <Coins className="h-4 w-4 text-yellow-600" />
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium">
                         {request.token_count.toLocaleString()} Zaryo Redemption
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-muted-foreground">
                         {format(new Date(request.created_at), 'MMM d, yyyy h:mm a')} • {request.payment_method}
                       </div>
                       {request.notes && (
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-xs text-muted-foreground mt-1">
                           Note: {request.notes}
                         </div>
                       )}
@@ -376,14 +376,14 @@ export function TokenManagementPage() {
       )}
 
       {/* Transaction History */}
-      <Card>
+      <Card className="glass-card border-none">
         <CardHeader>
           <CardTitle>Recent Transactions</CardTitle>
           <CardDescription>Your latest token activity</CardDescription>
         </CardHeader>
         <CardContent>
           {transactions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-muted-foreground">
               No transactions yet
             </div>
           ) : (
@@ -391,14 +391,14 @@ export function TokenManagementPage() {
               {transactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className="flex items-center justify-between p-3 border rounded-lg"
+                  className="flex items-center justify-between p-3 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div
                       className={`p-2 rounded-lg ${
                         transaction.amount > 0
-                          ? 'bg-green-50'
-                          : 'bg-red-50'
+                          ? 'bg-green-50/20'
+                          : 'bg-red-50/20'
                       }`}
                     >
                       {transaction.amount > 0 ? (
@@ -408,10 +408,10 @@ export function TokenManagementPage() {
                       )}
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium">
                         {transaction.description || transaction.transaction_type}
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-muted-foreground">
                         {format(new Date(transaction.created_at), 'MMM d, yyyy h:mm a')}
                       </div>
                     </div>
@@ -421,7 +421,7 @@ export function TokenManagementPage() {
                       className={`font-bold ${
                         transaction.amount > 0
                           ? 'text-green-600'
-                          : 'text-red-600'
+                          : 'text-red-500'
                       }`}
                     >
                       {transaction.amount > 0 ? '+' : ''}
