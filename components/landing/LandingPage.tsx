@@ -197,13 +197,13 @@ export function LandingPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4 animate-slide-up w-full sm:w-auto">
-              <Link href="/auth/signup" className="w-full sm:w-auto">
-                <Button className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto">
+              <Link href="/auth/signup">
+                <Button className="w-auto min-w-[200px] bg-accent hover:bg-accent/90 text-white shadow-xl hover:shadow-2xl transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto rounded-xl">
                   Start Creating
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Button variant="outline" className="w-full sm:w-auto glass border-2 border-accent/30 hover:glass-card transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto text-accent hover:text-accent">
+              <Button variant="outline" className="w-auto min-w-[200px] glass border-2 border-accent/30 hover:glass-card transition-all hover:scale-105 text-base md:text-lg px-8 py-6 h-auto text-accent hover:text-accent rounded-xl">
                 <Play className="mr-2 h-5 w-5" />
                 Watch Demo
               </Button>

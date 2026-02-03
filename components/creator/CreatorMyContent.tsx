@@ -66,7 +66,10 @@ export function CreatorMyContent() {
 
   const subscriptionAllowsUploads =
     !!subscription && new Date(subscription.current_period_end).getTime() > Date.now();
-  const uploadLocked = !subscriptionAllowsUploads;
+  
+  // Tier 1 users (Creators) can upload for free
+  const isTier1Creator = profile?.role === 'creator';
+  const uploadLocked = !isTier1Creator && !subscriptionAllowsUploads;
 
   return (
     <div className="space-y-6">

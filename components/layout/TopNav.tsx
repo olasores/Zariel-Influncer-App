@@ -78,14 +78,14 @@ export function TopNav() {
 
   return (
     <>
-      <nav className="h-16 glass-card rounded-2xl flex items-center justify-between px-4 lg:px-6 relative z-30 ml-12 lg:ml-0">
+      <nav className="h-16 glass-card rounded-2xl flex items-center justify-between pl-14 pr-3 lg:px-6 relative z-30 lg:ml-0">
         {/* Left side - Zariel branding */}
         <div className="flex items-center">
-          <div className="flex flex-col">
-            <h1 className="text-xl font-bold text-primary leading-none">
+          <div className="flex flex-col animate-fade-in">
+            <h1 className="text-base sm:text-lg md:text-xl font-bold text-primary leading-none whitespace-nowrap">
               Zariel & Co
             </h1>
-            <span className="text-xs text-muted-foreground leading-none">
+            <span className="text-[10px] md:text-xs text-muted-foreground leading-none hidden sm:block mt-1">
               Influencer Marketplace
             </span>
           </div>
@@ -113,7 +113,7 @@ export function TopNav() {
                   <span className="sr-only">Notifications</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 glass-card border-primary/20" align="end">
+              <PopoverContent className="w-[320px] max-w-[94vw] bg-white/95 backdrop-blur-xl border-primary/20 shadow-xl z-50 mr-1 sm:mr-0" align="end" sideOffset={8}>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold text-primary">Notifications</h3>
@@ -121,14 +121,14 @@ export function TopNav() {
                       NEW
                     </span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 max-h-[60vh] overflow-y-auto">
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
                         className={`p-3 rounded-lg transition-all duration-500 ease-out ${ 
                           notification.unread 
                             ? 'bg-accent/5 border border-accent/20' 
-                            : 'hover:glass-card'
+                            : 'hover:bg-accent/5'
                         }`}
                       >
                         <div className="flex items-start justify-between">
@@ -159,14 +159,14 @@ export function TopNav() {
             {/* User Profile */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-12 gap-3 px-3 rounded-full border border-primary/10 bg-white/40 hover:bg-white/60 hover:border-accent/50 transition-all duration-300 group">
+                <Button variant="ghost" className="relative h-10 md:h-12 w-10 md:w-auto md:gap-3 p-0 md:px-3 rounded-full border border-primary/10 bg-white/40 hover:bg-white/60 hover:border-accent/50 transition-all duration-300 group">
                   <Avatar className="h-9 w-9 border-2 border-white shadow-sm group-hover:border-accent transition-colors">
                     <AvatarImage src={profile?.avatar_url || undefined} alt={profile?.full_name || 'User'} />
                     <AvatarFallback className="bg-accent text-white text-xs font-bold">
                       {getUserInitials(profile?.full_name || undefined, profile?.email || undefined)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col items-start text-left min-w-0 pr-1">
+                  <div className="hidden md:flex flex-col items-start text-left min-w-0 pr-1">
                     <span className="text-sm font-bold text-primary truncate max-w-[120px]">
                       {profile?.full_name || profile?.email?.split('@')[0] || 'User'}
                     </span>
@@ -174,13 +174,21 @@ export function TopNav() {
                       {getRoleDisplay(profile?.role)}
                     </span>
                   </div>
-                  <div className="text-muted-foreground/50 group-hover:text-accent transition-colors">
+                  <div className="hidden md:block text-muted-foreground/50 group-hover:text-accent transition-colors">
                     <ChevronDown className="h-4 w-4" />
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-60 glass-card border-primary/20 p-2" align="end">
-                <DropdownMenuLabel className="text-primary">
+              <DropdownMenuContent className="w-56 bg-white/95 backdrop-blur-xl border-primary/20 p-2 shadow-xl z-50 mr-4 md:mr-0" align="end" sideOffset={8}>
+                <DropdownMenuLabel className="text-primary md:hidden mx-2 mt-1 mb-2">
+                  <div className="flex flex-col">
+                    <span className="font-bold">{profile?.full_name || 'User'}</span>
+                    <span className="text-xs text-muted-foreground font-normal">{getRoleDisplay(profile?.role)}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-primary/10 md:hidden" />
+
+                <DropdownMenuLabel className="text-primary hidden md:block">
                   My Account
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-primary/10" />

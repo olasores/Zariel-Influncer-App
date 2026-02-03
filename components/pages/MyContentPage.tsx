@@ -11,11 +11,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ContentCard } from '@/components/dashboard/ContentCard';
 import { ContentUploadDialog } from '@/components/dashboard/ContentUploadDialog';
-import { Plus, FileVideo, AlertCircle } from 'lucide-react';
+import { Loader2, Plus, FileVideo, AlertCircle } from 'lucide-react';
 import { Content, Subscription } from '@/lib/supabase';
 
 export function MyContentPage() {
-  const { profile } = useAuth();
+  const { profile, loading: authLoading } = useAuth();
+
+  if (authLoading) {
+    return (
+      <div className="flex h-[50vh] items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
   
   // Route admin users to AdminMyContent
   if (profile && isAdmin(profile)) {
