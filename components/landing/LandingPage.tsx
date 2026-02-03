@@ -91,8 +91,8 @@ export function LandingPage() {
         {/* Navigation */}
         <nav className="relative z-10 w-full">
           <div className="container mx-auto px-4 sm:px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2 md:space-x-4 animate-slide-in-left">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center space-x-2 md:space-x-4 animate-slide-in-left flex-shrink-0">
                 {/* <Image 
                   src="/assets/logo-dark1.png" 
                   alt="Zariel Logo" 
@@ -101,7 +101,7 @@ export function LandingPage() {
                   className="w-12 h-12 md:w-20 md:h-20 object-contain logo-transparent"
                 /> */}
                 <div className="flex flex-col">
-                  <span className="text-2xl md:text-4xl font-bold text-primary leading-none">
+                  <span className="text-xl sm:text-2xl md:text-4xl font-bold text-primary leading-none whitespace-nowrap">
                     Zariel & Co
                   </span>
                   <span className="text-xs md:text-base text-muted-foreground leading-none hidden sm:inline-block mt-1 md:mt-0">
@@ -109,15 +109,16 @@ export function LandingPage() {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 md:gap-6 animate-slide-in-right">
+              <div className="flex items-center gap-2 md:gap-6 animate-slide-in-right flex-shrink-0">
                 <Link href="/auth/login">
-                  <Button variant="ghost" className="text-primary hover:bg-primary/10 transition-all hover:scale-105 text-sm md:text-lg px-3 py-2 md:px-6 md:py-3 h-auto">
+                  <Button variant="ghost" className="text-primary hover:bg-primary/10 transition-all hover:scale-105 text-sm md:text-lg px-2 sm:px-3 py-2 md:px-6 md:py-3 h-auto">
                     Login
                   </Button>
                 </Link>
                 <Link href="/auth/signup">
-                  <Button className="bg-accent hover:bg-accent/90 text-white transition-all hover:scale-105 shadow-lg text-sm md:text-lg px-4 py-2 md:px-6 md:py-3 h-auto">
-                    Get Started
+                  <Button className="bg-accent hover:bg-accent/90 text-white transition-all hover:scale-105 shadow-lg text-sm md:text-lg px-3 sm:px-4 py-2 md:px-6 md:py-3 h-auto whitespace-nowrap">
+                    <span className="hidden sm:inline">Get Started</span>
+                    <span className="inline sm:hidden">Join</span>
                     <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
                   </Button>
                 </Link>
