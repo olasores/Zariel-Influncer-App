@@ -188,7 +188,7 @@ export function CreatorOverview() {
               href="/my-content"
               className="block p-3 rounded-lg border border-primary/20 hover:border-accent/50 hover:bg-accent/10 transition-colors bg-white/5"
             >
-              <div className="font-medium text-primary">Upload Content</div>
+              <div className="font-medium text-primary">Upload Content to the Marketplace</div>
               <div className="text-sm text-muted-foreground">
                 Share your videos, images, and more
               </div>

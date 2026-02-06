@@ -120,67 +120,67 @@ export function InnovatorOverview() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((stat, index) => (
-          <Card key={index} className="hover-card glass-card border-none">
+          <Card key={index} className="glass-card hover-card border-primary/20 bg-white/5">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {stat.title}
               </CardTitle>
-              <div className={`p-2 rounded-full ${stat.bgColor} bg-opacity-20`}>
-                <stat.icon className={`h-4 w-4 ${stat.color}`} />
+              <div className={`p-2 rounded-lg ${stat.bgColor} bg-opacity-20`}>
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {stat.description}
-              </p>
+              <div className="text-2xl font-bold text-primary">{stat.value}</div>
+              <p className="text-xs text-muted-foreground mt-1">{stat.description}</p>
             </CardContent>
           </Card>
         ))}
-      </div>      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="glass-card hover-card border-primary/20 bg-white/5">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks and shortcuts</CardDescription>
+            <CardTitle className="text-primary">Quick Actions</CardTitle>
+            <CardDescription className="text-muted-foreground">Common tasks and shortcuts</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <a
               href="/marketplace"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-primary/20 hover:border-accent/50 hover:bg-accent/10 transition-colors bg-white/5"
             >
-              <div className="font-medium text-gray-900">Browse Marketplace</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium text-primary">Browse Marketplace</div>
+              <div className="text-sm text-muted-foreground">
                 Find content from creators
               </div>
             </a>
             <a
               href="/token-management"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-primary/20 hover:border-accent/50 hover:bg-accent/10 transition-colors bg-white/5"
             >
-              <div className="font-medium text-gray-900">Purchase Zaryo</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium text-primary">Purchase Zaryo</div>
+              <div className="text-sm text-muted-foreground">
                 Buy tokens to purchase content
               </div>
             </a>
             <a
               href="/my-purchases"
-              className="block p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="block p-3 rounded-lg border border-primary/20 hover:border-accent/50 hover:bg-accent/10 transition-colors bg-white/5"
             >
-              <div className="font-medium text-gray-900">My Purchases</div>
-              <div className="text-sm text-gray-500">
+              <div className="font-medium text-primary">My Purchases</div>
+              <div className="text-sm text-muted-foreground">
                 View purchased content
               </div>
             </a>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="glass-card hover-card border-primary/20 bg-white/5">
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Your latest transactions</CardDescription>
+            <CardTitle className="text-primary">Recent Activity</CardTitle>
+            <CardDescription className="text-muted-foreground">Your latest transactions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-muted-foreground">
               View your recent transactions in Token Management
             </div>
           </CardContent>

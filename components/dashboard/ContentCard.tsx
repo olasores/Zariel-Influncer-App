@@ -180,7 +180,7 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
   };
 
   return (
-    <Card className="overflow-hidden glass-card hover-card border-primary/20 bg-white/5">
+    <Card className="group overflow-hidden glass-card hover-card border-primary/20 bg-white/5">
       <div className="relative aspect-video bg-muted/20">
         {renderPreview()}
         <Badge className={`absolute top-3 right-3 ${getStatusColor(content.status)} shadow-lg`}>
@@ -193,25 +193,47 @@ export function ContentCard({ content, onUpdate, showPurchase = false, onPurchas
       </div>
       <CardContent className="p-4 space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-semibold text-lg line-clamp-1 flex-1 text-primary">{content.title}</h3>
+          <h3 className="font-semibold text-lg flex-1 text-primary">
+            <span className="block line-clamp-1 group-hover:hidden">{content.title}</span>
+            <span className="hidden group-hover:block break-words">{content.title}</span>
+          </h3>
           {creatorProfile && (
-            <Badge variant="outline" className="flex items-center gap-1 border-primary/20 text-muted-foreground bg-primary/5">
+            <Badge
+              variant="outline"
+              className="flex items-center gap-1 border-primary/20 text-muted-foreground bg-primary/5 max-w-[55%] truncate"
+              title={creatorProfile.full_name || creatorProfile.email || undefined}
+            >
               {creatorProfile.role === 'innovator' || creatorProfile.role === 'visionary' ? (
                 <>
                   <Building2 className="h-3 w-3" />
-                  Company
+                  <span className="truncate">
+                    {(creatorProfile.full_name || creatorProfile.email || 'Company').length > 0
+                      ? `Company • ${creatorProfile.full_name || creatorProfile.email || 'Unknown'}`
+                      : 'Company'}
+                  </span>
                 </>
               ) : (
                 <>
                   <User className="h-3 w-3" />
-                  Creator
+                  <span className="truncate">
+                    {(creatorProfile.full_name || creatorProfile.email || 'Creator').length > 0
+                      ? `Creator • ${creatorProfile.full_name || creatorProfile.email || 'Unknown'}`
+                      : 'Creator'}
+                  </span>
                 </>
               )}
             </Badge>
           )}
         </div>
         {content.description && (
-          <p className="text-sm text-muted-foreground line-clamp-2">{content.description}</p>
+          <>
+            <p className="text-sm text-muted-foreground line-clamp-2 group-hover:hidden">
+              {content.description}
+            </p>
+            <p className="hidden group-hover:block text-sm text-muted-foreground whitespace-pre-wrap max-h-32 overflow-y-auto">
+              {content.description}
+            </p>
+          </>
         )}
         <div className="flex items-center justify-between pt-2 border-t border-primary/10">
           <div className="flex items-center text-accent">

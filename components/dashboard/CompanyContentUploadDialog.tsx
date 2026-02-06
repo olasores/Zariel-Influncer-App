@@ -146,7 +146,7 @@ export function CompanyContentUploadDialog({ open, onOpenChange, onSuccess, subs
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Upload Content</DialogTitle>
+          <DialogTitle>Upload Content to the Marketplace</DialogTitle>
           <DialogDescription>
             Share your content idea - videos, images, audio, documents, and more.
             {isAdminUser && (
