@@ -93,7 +93,13 @@ export function MyServicesManager() {
           schema: 'public',
           table: 'service_bookings',
         },
-        () => {
+        (payload: any) => {
+          if (payload.eventType === 'INSERT') {
+            toast({
+              title: 'New service booking',
+              description: 'Someone just booked one of your services.',
+            });
+          }
           loadBookings();
         }
       )

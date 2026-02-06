@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -20,10 +22,18 @@ import {
 import { Bell, Settings, LogOut, User, ChevronDown } from 'lucide-react';
 import { AccountSettingsDialog } from './AccountSettingsDialog';
 
+interface AppNotification {
+  id: string;
+  title: string;
+  time: string;
+}
+
 export function TopNav() {
   const { profile, signOut } = useAuth();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notifications, setNotifications] = useState<AppNotification[]>([]);
+  const unreadCount = notifications.length;
 
   const handleSignOut = () => {
     if (typeof window !== 'undefined') {
@@ -67,14 +77,56 @@ export function TopNav() {
     return 'U';
   };
 
-  // Mock notifications - you can replace this with real data
-  const notifications = [
-    { id: 1, title: 'New content bid received', time: '2 min ago', unread: true },
-    { id: 2, title: 'Payment processed successfully', time: '1 hour ago', unread: true },
-    { id: 3, title: 'Profile updated', time: '3 hours ago', unread: false },
-  ];
+  useEffect(() => {
+    if (!profile) return;
 
-  const unreadCount = notifications.filter(n => n.unread).length;
+    const loadNotifications = async () => {
+      try {
+        const userId = profile.id;
+
+        const [txResult, bookingResult] = await Promise.all([
+          supabase
+            .from('token_transactions')
+            .select('id, amount, transaction_type, description, created_at, from_user_id, to_user_id')
+            .or(`from_user_id.eq.${userId},to_user_id.eq.${userId}`)
+            .order('created_at', { ascending: false })
+            .limit(5),
+          supabase
+            .from('service_bookings')
+            .select('id, created_at, status, services(title), service_owner_id, user_id')
+            .or(`service_owner_id.eq.${userId},user_id.eq.${userId}`)
+            .order('created_at', { ascending: false })
+            .limit(5),
+        ]);
+
+        const txNotifications = (txResult.data || []).map((tx: any) => ({
+          id: `tx-${tx.id}`,
+          title:
+            tx.description ||
+            (tx.transaction_type === 'purchase'
+              ? `Purchase • ${tx.amount} Zaryo`
+              : `Transaction • ${tx.amount} Zaryo`),
+          time: new Date(tx.created_at).toLocaleString(),
+        }));
+
+        const bookingNotifications = (bookingResult.data || []).map((b: any) => ({
+          id: `booking-${b.id}`,
+          title: `Booking ${b.status} • ${b.services?.title || 'Service'}`,
+          time: new Date(b.created_at).toLocaleString(),
+        }));
+
+        const all = [...txNotifications, ...bookingNotifications]
+          .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+          .slice(0, 5);
+
+        setNotifications(all);
+      } catch (error) {
+        console.error('Error loading notifications:', error);
+      }
+    };
+
+    loadNotifications();
+  }, [profile]);
 
   return (
     <>
@@ -122,14 +174,15 @@ export function TopNav() {
                     </span>
                   </div>
                   <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+                    {notifications.length === 0 && (
+                      <div className="text-sm text-muted-foreground py-4 text-center">
+                        No notifications yet. New bookings and transactions will appear here.
+                      </div>
+                    )}
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={`p-3 rounded-lg transition-all duration-500 ease-out ${ 
-                          notification.unread 
-                            ? 'bg-accent/5 border border-accent/20' 
-                            : 'hover:bg-accent/5'
-                        }`}
+                        className="p-3 rounded-lg transition-all duration-500 ease-out hover:bg-accent/5 border border-accent/10"
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -140,16 +193,13 @@ export function TopNav() {
                               {notification.time}
                             </p>
                           </div>
-                          {notification.unread && (
-                            <div className="w-2 h-2 bg-accent rounded-full mt-1 ml-2" />
-                          )}
                         </div>
                       </div>
                     ))}
                   </div>
                   <div className="pt-2 border-t border-primary/10">
-                    <Button variant="ghost" className="w-full text-accent hover:glass-card">
-                      View all notifications
+                    <Button asChild variant="ghost" className="w-full text-accent hover:glass-card">
+                      <Link href="/token-management">View all notifications</Link>
                     </Button>
                   </div>
                 </div>

@@ -56,8 +56,21 @@ export function TokenManagementPage() {
             schema: 'public',
             table: 'token_transactions',
           },
-          () => {
-            console.log('Transaction changed, reloading data');
+          (payload: any) => {
+            console.log('Transaction changed, reloading data', payload);
+
+            if (payload.eventType === 'INSERT') {
+              const tx = payload.new as Transaction;
+              const isIncoming = tx.to_user_id === profile.id;
+
+              toast({
+                title: isIncoming ? 'Tokens received' : 'Tokens updated',
+                description:
+                  (tx.description || tx.transaction_type || 'New transaction') +
+                  ` · ${tx.amount} Zaryo · ID: ${tx.id}`,
+              });
+            }
+
             loadData();
             refreshProfile();
           }
@@ -413,6 +426,9 @@ export function TokenManagementPage() {
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {format(new Date(transaction.created_at), 'MMM d, yyyy h:mm a')}
+                      </div>
+                      <div className="text-xs text-muted-foreground font-mono break-all mt-1">
+                        Txn ID: {transaction.id}
                       </div>
                     </div>
                   </div>

@@ -208,6 +208,7 @@ export function AdminTokenManagement() {
                     <TableHead>Date</TableHead>
                     <TableHead>Type</TableHead>
                     <TableHead>Description</TableHead>
+                    <TableHead>Txn ID</TableHead>
                     <TableHead className="text-right">Amount</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -229,6 +230,9 @@ export function AdminTokenManagement() {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-sm">{transaction.description || '-'}</TableCell>
+                      <TableCell className="text-xs font-mono text-gray-500 max-w-[160px] truncate">
+                        {transaction.id}
+                      </TableCell>
                       <TableCell className="text-right font-medium">
                         <span
                           className={

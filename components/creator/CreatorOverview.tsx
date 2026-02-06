@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,6 +23,7 @@ export function CreatorOverview() {
     totalSpent: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [recentTransactions, setRecentTransactions] = useState<any[]>([]);
 
   useEffect(() => {
     if (profile) {
@@ -39,6 +41,7 @@ export function CreatorOverview() {
           },
           () => {
             loadStats();
+            loadRecentTransactions();
           }
         )
         .subscribe();
@@ -94,6 +97,24 @@ export function CreatorOverview() {
       console.error('Error loading creator stats:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadRecentTransactions = async () => {
+    if (!profile) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('token_transactions')
+        .select('id, amount, transaction_type, description, status, created_at')
+        .or(`from_user_id.eq.${profile.id},to_user_id.eq.${profile.id}`)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) throw error;
+      setRecentTransactions(data || []);
+    } catch (error) {
+      console.error('Error loading recent creator transactions:', error);
     }
   };
 
@@ -220,9 +241,37 @@ export function CreatorOverview() {
             <CardDescription className="text-muted-foreground">Your latest transactions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-sm text-muted-foreground">
-              View your recent transactions in Token Management
-            </div>
+            {recentTransactions.length === 0 ? (
+              <div className="text-sm text-muted-foreground">
+                No recent activity yet. Purchases, bookings, and token movements will appear here.
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {recentTransactions.map((tx) => (
+                  <div
+                    key={tx.id}
+                    className="flex items-center justify-between text-sm"
+                  >
+                    <div>
+                      <div className="font-medium text-primary">
+                        {tx.description || tx.transaction_type}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {format(new Date(tx.created_at), 'MMM d, yyyy h:mm a')}
+                      </div>
+                    </div>
+                    <div
+                      className={`text-xs font-semibold ${
+                        tx.amount >= 0 ? 'text-green-600' : 'text-red-500'
+                      }`}
+                    >
+                      {tx.amount >= 0 ? '+' : ''}
+                      {tx.amount}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
