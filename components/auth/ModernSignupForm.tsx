@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Sparkles, Mail, Lock, User, ArrowRight, AlertCircle, Loader2, Briefcase } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, AlertCircle, Loader2, Briefcase } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 type UserRole = 'creator' | 'innovator' | 'visionary';
@@ -93,43 +93,94 @@ export function ModernSignupForm() {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Animated background */}
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-10 w-72 h-72 glass rounded-full animate-float" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 glass-dark rounded-full animate-float" style={{ animationDelay: '2s' }} />
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.15, 0.25, 0.15],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-[#A7D129]/20 to-[#95c51f]/10 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+          className="absolute bottom-20 left-10 w-[500px] h-[500px] bg-gradient-to-br from-[#6A7B92]/15 to-[#5a6a7e]/10 rounded-full blur-3xl"
+        />
       </div>
+
+      {/* Animated SVG Lines */}
+      <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+        <motion.path
+          d="M 0 300 Q 400 100 800 300 T 1600 300"
+          stroke="url(#gradient2)"
+          strokeWidth="3"
+          fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <defs>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6A7B92" />
+            <stop offset="100%" stopColor="#A7D129" />
+          </linearGradient>
+        </defs>
+      </svg>
 
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
         <Link href="/">
-          <div className="flex items-center justify-center space-x-4 mb-8 animate-fade-in cursor-pointer group">
-            {/* <Image 
-              src="/assets/logo-dark1.png" 
-              alt="Zariel Logo" 
-              width={72} 
-              height={72} 
-              className="w-18 h-18 object-contain group-hover:scale-110 transition-transform logo-transparent"
-            /> */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-3 mb-8 cursor-pointer group"
+          >
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#A7D129] to-[#6A7B92] rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg">
+                <span className="text-2xl font-black text-white">Z</span>
+              </div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse" />
+            </div>
             <div className="flex flex-col">
-              <span className="text-3xl md:text-4xl font-bold text-secondary leading-none">
+              <span className="text-xl font-black bg-gradient-to-r from-[#6A7B92] to-[#A7D129] bg-clip-text text-transparent leading-tight">
                 Zariel & Co
               </span>
-              <span className="text-base md:text-lg text-muted-foreground leading-none">
+              <span className="text-xs font-bold text-gray-500 leading-tight">
                 Influencer Marketplace
               </span>
             </div>
-          </div>
+          </motion.div>
         </Link>
 
         {/* Signup Card */}
-        <Card className="glass-card border-primary/30 shadow-2xl animate-scale-in">
-          <CardHeader className="space-y-2 text-center pb-6">
-            <CardTitle className="text-3xl font-bold">Create Account</CardTitle>
-            <CardDescription className="text-base">
-              Join the creator economy today
-            </CardDescription>
-          </CardHeader>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <Card className="bg-white/90 backdrop-blur-xl border-2 border-gray-200 shadow-2xl">
+            <CardHeader className="space-y-2 text-center pb-6">
+              <CardTitle className="text-3xl font-black text-gray-900">Create Account</CardTitle>
+              <CardDescription className="text-base text-gray-600">
+                Join the creator economy today
+              </CardDescription>
+            </CardHeader>
           <CardContent>
             <form onSubmit={handleSignup} className="space-y-4">
               {error && (
@@ -140,16 +191,16 @@ export function ModernSignupForm() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="fullName" className="text-base font-medium">Full Name</Label>
+                <Label htmlFor="fullName" className="text-base font-semibold text-gray-700">Full Name</Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
                     id="fullName"
                     type="text"
                     placeholder="John Doe"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="pl-10 h-12 text-base border-2 focus:border-primary transition-all"
+                    className="pl-10 h-12 text-base border-2 border-gray-200 focus:border-[#A7D129] focus:ring-2 focus:ring-[#A7D129]/20 transition-all rounded-xl"
                     required
                     disabled={loading}
                   />
@@ -157,16 +208,16 @@ export function ModernSignupForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-base font-medium">Email</Label>
+                <Label htmlFor="email" className="text-base font-semibold text-gray-700">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
                     id="email"
                     type="email"
                     placeholder="you@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10 h-12 text-base border-2 focus:border-primary transition-all"
+                    className="pl-10 h-12 text-base border-2 border-gray-200 focus:border-[#A7D129] focus:ring-2 focus:ring-[#A7D129]/20 transition-all rounded-xl"
                     required
                     disabled={loading}
                   />
@@ -174,11 +225,11 @@ export function ModernSignupForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="role" className="text-base font-medium">Account Type</Label>
+                <Label htmlFor="role" className="text-base font-semibold text-gray-700">Account Type</Label>
                 <div className="relative">
-                  <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground z-10" />
+                  <Briefcase className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
                   <Select value={role} onValueChange={(value: UserRole) => setRole(value)} disabled={loading}>
-                    <SelectTrigger className="pl-10 h-12 text-base border-2 glass">
+                    <SelectTrigger className="pl-10 h-12 text-base border-2 border-gray-200 rounded-xl">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -203,22 +254,22 @@ export function ModernSignupForm() {
                     </SelectContent>
                   </Select>
                 </div>
-                <p className="text-xs text-muted-foreground pl-1">
+                <p className="text-xs text-gray-500 pl-1 font-medium">
                   {roleDescriptions[role]}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-base font-medium">Password</Label>
+                <Label htmlFor="password" className="text-base font-semibold text-gray-700">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
                     id="password"
                     type="password"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 h-12 text-base border-2 focus:border-primary transition-all"
+                    className="pl-10 h-12 text-base border-2 border-gray-200 focus:border-[#A7D129] focus:ring-2 focus:ring-[#A7D129]/20 transition-all rounded-xl"
                     required
                     disabled={loading}
                   />
@@ -226,16 +277,16 @@ export function ModernSignupForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-base font-medium">Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className="text-base font-semibold text-gray-700">Confirm Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <Input
                     id="confirmPassword"
                     type="password"
                     placeholder="••••••••"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="pl-10 h-12 text-base border-2 focus:border-primary transition-all"
+                    className="pl-10 h-12 text-base border-2 border-gray-200 focus:border-[#A7D129] focus:ring-2 focus:ring-[#A7D129]/20 transition-all rounded-xl"
                     required
                     disabled={loading}
                   />
@@ -244,7 +295,7 @@ export function ModernSignupForm() {
 
               <Button 
                 type="submit" 
-                className="w-full h-12 text-base font-semibold glass-card hover:animate-glow border-primary/30 transition-all hover:scale-105"
+                className="w-full h-12 text-base font-bold bg-gradient-to-r from-[#A7D129] to-[#95c51f] hover:from-[#95c51f] hover:to-[#A7D129] text-white rounded-xl shadow-lg hover:shadow-xl transition-all hover:scale-105"
                 disabled={loading}
               >
                 {loading ? (
@@ -260,31 +311,37 @@ export function ModernSignupForm() {
                 )}
               </Button>
 
-              <p className="text-xs text-center text-muted-foreground">
+              <p className="text-xs text-center text-gray-600">
                 By signing up, you agree to our{' '}
-                <a href="#" className="text-primary hover:underline">Terms</a>
+                <a href="#" className="text-[#A7D129] hover:text-[#95c51f] font-semibold">Terms</a>
                 {' '}and{' '}
-                <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+                <a href="#" className="text-[#A7D129] hover:text-[#95c51f] font-semibold">Privacy Policy</a>
               </p>
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 Already have an account?{' '}
-                <Link href="/auth/login" className="text-primary hover:underline font-semibold">
+                <Link href="/auth/login" className="text-[#A7D129] hover:text-[#95c51f] font-bold">
                   Sign in
                 </Link>
               </p>
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* Back to home */}
-        <div className="text-center mt-6 animate-fade-in">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-6"
+        >
+          <Link href="/" className="text-sm text-gray-600 hover:text-[#A7D129] font-semibold transition-colors">
             ← Back to home
           </Link>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
