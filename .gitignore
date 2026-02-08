@@ -58,9 +58,8 @@ next-env.d.ts
 
 .history
 
-
-
 *.sql
 
+# Markdown files
+*.md
 
-BIDDING_SYSTEM.md
