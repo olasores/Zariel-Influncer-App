@@ -1,14 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Create admin client with service role
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+const getAdminClient = () => {
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Supabase admin environment variables are missing');
+  }
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseAdmin = getAdminClient();
     // Verify the user is authenticated and is an admin
     const authHeader = request.headers.get('authorization');
     if (!authHeader) {
@@ -65,6 +70,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const supabaseAdmin = getAdminClient();
     const authHeader = request.headers.get('authorization');
     if (!authHeader) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
