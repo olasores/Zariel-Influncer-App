@@ -1,14 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Create admin client with service role
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+const getAdminClient = () => {
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Supabase admin environment variables are missing');
+  }
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
 
 export async function POST(request: NextRequest) {
   try {
+    const supabaseAdmin = getAdminClient();
     const body = await request.json();
     const { product_id, buyer_id, quantity = 1 } = body;
 
@@ -162,6 +167,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseAdmin = getAdminClient();
     const { searchParams } = new URL(request.url);
     const buyer_id = searchParams.get('buyer_id');
     const admin_id = searchParams.get('admin_id');

@@ -82,6 +82,14 @@ export interface TokenTransaction {
   created_at: string;
 }
 
+export interface DirectMessage {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  content: string;
+  created_at: string;
+}
+
 export interface Purchase {
   id: string;
   video_id: string;

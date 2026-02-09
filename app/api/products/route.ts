@@ -1,14 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-// Create admin client with service role to bypass RLS for public reading
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+const getAdminClient = () => {
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Supabase admin environment variables are missing');
+  }
+  return createClient(supabaseUrl, supabaseServiceKey);
+};
 
 export async function GET(request: NextRequest) {
   try {
+    const supabaseAdmin = getAdminClient();
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     

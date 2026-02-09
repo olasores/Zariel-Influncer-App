@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -19,7 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Bell, Settings, LogOut, User, ChevronDown } from 'lucide-react';
+import { Bell, Settings, LogOut, User, ChevronDown, MessageCircle } from 'lucide-react';
 import { AccountSettingsDialog } from './AccountSettingsDialog';
 
 interface AppNotification {
@@ -30,10 +31,12 @@ interface AppNotification {
 
 export function TopNav() {
   const { profile, signOut } = useAuth();
+  const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [notifications, setNotifications] = useState<AppNotification[]>([]);
   const unreadCount = notifications.length;
+  const chatActive = pathname?.startsWith('/chat');
 
   const handleSignOut = () => {
     if (typeof window !== 'undefined') {
@@ -148,6 +151,17 @@ export function TopNav() {
 
           {/* Right side - Notifications and User */}
           <div className="flex items-center gap-3">
+            <Button
+              asChild
+              variant={chatActive ? 'secondary' : 'ghost'}
+              className={`h-10 rounded-full border border-primary/10 hover:border-accent/50 transition-colors ${chatActive ? 'bg-accent/10 text-accent' : 'text-primary'}`}
+            >
+              <Link href="/chat" className="flex items-center gap-2 px-3">
+                <MessageCircle className="h-4 w-4" />
+                <span className="hidden sm:inline">Chat</span>
+              </Link>
+            </Button>
+
             {/* Notifications */}
             <Popover open={notificationsOpen} onOpenChange={setNotificationsOpen}>
               <PopoverTrigger asChild>
